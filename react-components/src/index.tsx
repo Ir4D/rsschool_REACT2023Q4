@@ -6,7 +6,7 @@ import './index.css';
 
 const apiService = new ApiService();
 
-apiService.getAllItems().then(data => console.log(data));
+apiService.getAllItems().then(data => data.results.forEach((elem: { name: string; }) => console.log(elem.name)));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

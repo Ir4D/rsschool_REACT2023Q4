@@ -1,6 +1,6 @@
-
-
 class ApiService {
+  _apiUrl = 'https://swapi.dev/api/planets/';
+  
   getData = async (url: string) => {
     const data = await fetch(url);
 
@@ -12,11 +12,11 @@ class ApiService {
   }
 
   getAllItems = () => {
-    return this.getData('https://swapi.dev/api/planets/');
+    return this.getData(`${this._apiUrl}`);
   }
 
   getSearchItems = (searchText: string) => {
-    return this.getData(`https://swapi.dev/api/planets/?search=${searchText}`);
+    return this.getData(`${this._apiUrl}?search=${searchText}`);
   }
 }
 
