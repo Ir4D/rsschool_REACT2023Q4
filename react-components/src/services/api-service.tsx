@@ -19,23 +19,6 @@ class ApiService {
     return this.getData(`${this._apiUrl}?search=${searchText}`);
   }
 
-  // getAllPlanets = async () => {
-  //   const data = await this.getData(this._apiUrl);
-  //   return data.results.map((elem: {
-  //     name: string;
-  //     terrain: string;
-  //     climate: string;
-  //     diameter: string;
-  //     population: string;
-  //   }) => ({
-  //     name: elem.name,
-  //     terrain: elem.terrain,
-  //     climate: elem.climate,
-  //     diameter: elem.diameter,
-  //     population: elem.population,
-  //   }));
-  // };
-
   getAllPlanets = async () => {
     const data = await this.getData(this._apiUrl);
     return data.results.map((elem: { 
