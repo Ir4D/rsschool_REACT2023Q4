@@ -51,8 +51,8 @@ class ResultsList extends Component<ResultsListProps> {
   }
 
   renderPlanets(arr: Planet[]) {
-    if (!Array.isArray(arr)) {
-      return null;
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return <p>No planets were found</p>;
     }
 
     const planets = arr.map(planet => {

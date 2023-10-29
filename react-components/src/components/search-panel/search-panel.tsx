@@ -10,7 +10,6 @@ class SearchPanel extends Component<SearchPanelProps> {
   };
 
   searchNewResults = () => {
-    console.log(this.state.inputValue);
     this.props.updateData(this.state.inputValue);
   };
 
