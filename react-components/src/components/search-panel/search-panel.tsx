@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from 'react'
+import { ChangeEvent, Component } from 'react';
 import './search-panel.css';
 
 type SearchPanelProps = {
