@@ -1,22 +1,26 @@
 .search-panel {
   width: 70%;
   margin: 0 auto;
+  margin-bottom: 80px;
 }
 
 .search-input {
   border: none;
   outline: #ffffff33 1px solid;
   width: 50%;
-  height: 28px;
+  height: 36px;
   margin-right: 10px;
-  padding-left: 5px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  font-size: 22px;
   border-radius: 3px;
   box-shadow: 0 0 6px #ffffff33;
 }
 
 .search-btn {
-  width: 100px;
-  height: 30px;
+  width: 120px;
+  height: 40px;
+  font-size: 22px;
   box-shadow: 0 0 6px #ffffff33;
 }
 
