@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ApiService from "../../services/api-service";
+import './results-list.css';
 
 import planetImg from '../../assets/img/planet.png';
 
@@ -8,7 +9,6 @@ type Planet = {
   terrain: string;
   climate: string;
   diameter: string;
-  population: string;
 };
 
 type State = {
@@ -37,18 +37,17 @@ class ResultsList extends Component<object, State> {
         <li className='planet-item' key={planet.name}>
           <img src={planetImg} alt="Planet" className='planet-img' />
           <div className="planet-description">
-            <p className='planet-info planet-name'>Name: {planet.name}</p>
+            <p className='planet-info planet-name'>{planet.name}</p>
             <p className='planet-info planet-terrain'>Terrain: {planet.terrain}</p>
             <p className='planet-info planet-climate'>Climate: {planet.climate}</p>
             <p className='planet-info planet-diameter'>Diameter: {planet.diameter}</p>
-            <p className='planet-info planet-population'>Population: {planet.population}</p>
           </div>
         </li>
       );
     });
 
     return (
-      <ul>
+      <ul className="planets-list">
         {planets}
       </ul>
     )
@@ -56,16 +55,14 @@ class ResultsList extends Component<object, State> {
 
   render() {
     const {resultsList} = this.state;
-
     const planets = this.renderPlanets(resultsList);
 
     return (
-      <div className="planets-list">
+      <div className="results-panel">
         {planets}
       </div>
     )
   }
-
 }
 
 export default ResultsList;
