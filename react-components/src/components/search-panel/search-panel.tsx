@@ -1,12 +1,17 @@
 import { ChangeEvent, Component } from "react";
 
-class SearchPanel extends Component {
+type SearchPanelProps = {
+  updateData: (value: string) => void;
+};
+
+class SearchPanel extends Component<SearchPanelProps> {
   state = {
     inputValue: ''
   };
 
   searchNewResults = () => {
     console.log(this.state.inputValue);
+    this.props.updateData(this.state.inputValue);
   };
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +30,10 @@ class SearchPanel extends Component {
         />
   
         <button 
-            type="submit"
-            className="search-btn"
-            onClick={this.searchNewResults}>Search</button>
+          type="submit"
+          className="search-btn"
+          onClick={this.searchNewResults}
+        >Search</button>
       </div>
     )
   }
