@@ -37,6 +37,10 @@ class ApiService {
       }
     });
   };
+
+  getSearchPlanets = (searchText: string) => {
+    return this.getData(`${this._apiUrl}?search=${searchText}`);
+  }
 }
 
 export default ApiService;
