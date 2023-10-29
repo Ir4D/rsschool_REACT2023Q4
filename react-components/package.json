@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "format:fix": "npx prettier --write .",
     "prepare": "husky install",
-    "lint": "eslint ./src",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint ./src --fix --color",
     "precommit": "lint-staged",
     "prettier": "prettier ./src --write"
@@ -22,7 +22,7 @@
   "lint-staged": {
     "*.tsx": [
       "prettier --write",
-      "eslint --cache --fix"
+      "eslint --fix"
     ],
     "*.html": [
       "prettier --write"
