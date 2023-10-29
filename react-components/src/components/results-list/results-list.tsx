@@ -3,6 +3,7 @@ import ApiService from "../../services/api-service";
 import './results-list.css';
 
 import planetImg from '../../assets/img/planet.png';
+import Spinner from "../spinner/spinner";
 
 type Planet = {
   name: string;
@@ -17,7 +18,8 @@ type ResultsListProps = {
 
 class ResultsList extends Component<ResultsListProps> {
   state = {
-    resultsList: []
+    resultsList: [],
+    loading: true
   };
 
   apiService = new ApiService();
@@ -28,7 +30,9 @@ class ResultsList extends Component<ResultsListProps> {
 
   async componentDidUpdate(prevProps: ResultsListProps) {
     if (prevProps.term !== this.props.term) {
+      this.setState({ loading: true });
       await this.loadData(this.props.term);
+      this.setState({ loading: false });
     }
   }
 
@@ -43,7 +47,7 @@ class ResultsList extends Component<ResultsListProps> {
       }
 
       this.setState({
-        resultsList
+        resultsList, loading: false
       });
     } catch (error) {
       console.error("Error loading data:", error);
@@ -77,7 +81,12 @@ class ResultsList extends Component<ResultsListProps> {
   }
 
   render() {
-    const { resultsList } = this.state;
+    const { resultsList, loading } = this.state;
+
+    if (loading) {
+      return <Spinner/>
+    }
+
     const planets = this.renderPlanets(resultsList);
 
     return (
