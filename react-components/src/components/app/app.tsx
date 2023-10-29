@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import SearchPanel from '../search-panel/search-panel';
 import ResultsList from '../results-list/results-list';
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import './app.css';
 
 type AppState = {
@@ -26,7 +27,9 @@ class App extends Component<object, AppState> {
       <div>
         <h1 className='app-heading'>Star Wars Planets:</h1>
         <SearchPanel updateData={this.updateData} />
-        <ResultsList term={this.state.term} />
+        <ErrorBoundary>
+          <ResultsList term={this.state.term} />
+        </ErrorBoundary>
       </div>
     );
   }
