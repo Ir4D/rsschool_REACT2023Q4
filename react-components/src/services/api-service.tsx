@@ -11,14 +11,6 @@ class ApiService {
     return await data.json();
   }
 
-  getAllItems = () => {
-    return this.getData(`${this._apiUrl}`);
-  }
-
-  getSearchItems = (searchText: string) => {
-    return this.getData(`${this._apiUrl}?search=${searchText}`);
-  }
-
   getAllPlanets = async () => {
     const data = await this.getData(this._apiUrl);
     return data.results.map((elem: { 
@@ -37,10 +29,6 @@ class ApiService {
       }
     });
   };
-
-  // getSearchPlanets = (searchText: string) => {
-  //   return this.getData(`${this._apiUrl}?search=${searchText}`);
-  // }
 
   getSearchPlanets = async (searchText: string) => {
     const data = await this.getData(`${this._apiUrl}?search=${searchText}`);
