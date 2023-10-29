@@ -25,7 +25,7 @@ class App extends Component<object, AppState> {
   render() {
     return (
       <div>
-        <h1 className='app-heading'>Star Wars Planets:</h1>
+        <h1 className="app-heading">Star Wars Planets:</h1>
         <SearchPanel updateData={this.updateData} />
         <ErrorBoundary>
           <ResultsList term={this.state.term} />
