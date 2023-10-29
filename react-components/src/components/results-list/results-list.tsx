@@ -24,8 +24,13 @@ class ResultsList extends Component<ResultsListProps> {
 
   apiService = new ApiService();
 
-  componentDidMount() {
-    this.loadData(this.props.term);
+  async componentDidMount() {
+    const savedSearchTerm = localStorage.getItem('searchInput');
+    if (savedSearchTerm) {
+      await this.loadData(savedSearchTerm);
+    } else {
+      await this.loadData(this.props.term);
+    }
   }
 
   async componentDidUpdate(prevProps: ResultsListProps) {

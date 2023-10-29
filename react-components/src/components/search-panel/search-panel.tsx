@@ -9,7 +9,23 @@ class SearchPanel extends Component<SearchPanelProps> {
     inputValue: ''
   };
 
+  saveToLocalStorage = (value: string) => {
+    localStorage.setItem('searchInput', value);
+  };
+
+  loadFromLocalStorage = () => {
+    const savedValue = localStorage.getItem('searchInput');
+    if (savedValue) {
+      this.setState({ inputValue: savedValue });
+    }
+  };
+
+  componentDidMount() {
+    this.loadFromLocalStorage();
+  }
+
   searchNewResults = () => {
+    this.saveToLocalStorage(this.state.inputValue);
     this.props.updateData(this.state.inputValue);
   };
 
