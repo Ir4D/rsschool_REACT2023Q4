@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint --fix --ext .ts,.tsx ./src",
     "preview": "vite preview",
     "format:fix": "npx prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix --color",
+    "precommit": "lint-staged",
+    "prettier": "prettier ./src --write"
   },
   "husky": {
     "hooks": {
@@ -17,8 +20,14 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "npm run lint",
+    "*.tsx": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ],
+    "*.html": [
+      "prettier --write"
+    ],
+    "*.css": [
       "prettier --write"
     ]
   },
