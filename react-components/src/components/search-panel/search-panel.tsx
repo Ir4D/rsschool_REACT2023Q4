@@ -1,5 +1,5 @@
-import { ChangeEvent, Component } from 'react';
-import './search-panel.css'
+import { ChangeEvent, Component } from 'react'
+import './search-panel.css';
 
 type SearchPanelProps = {
   updateData: (value: string) => void;
