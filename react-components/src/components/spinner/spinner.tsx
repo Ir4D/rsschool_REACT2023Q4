@@ -30,14 +30,34 @@ const Spinner = () => {
                 animationDelay: '0s',
               }}
             >
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#ffffff" style={{ animationPlayState: 'running', animationDelay: '0s' }}>
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin={begin} repeatCount="indefinite" style={{ animationPlayState: 'running', animationDelay: '0s' }}></animate>
+              <rect
+                x="47"
+                y="24"
+                rx="3"
+                ry="6"
+                width="6"
+                height="12"
+                fill="#ffffff"
+                style={{ animationPlayState: 'running', animationDelay: '0s' }}
+              >
+                <animate
+                  attributeName="opacity"
+                  values="1;0"
+                  keyTimes="0;1"
+                  dur="1s"
+                  begin={begin}
+                  repeatCount="indefinite"
+                  style={{
+                    animationPlayState: 'running',
+                    animationDelay: '0s',
+                  }}
+                ></animate>
               </rect>
             </g>
           );
         })}
     </svg>
-  )
-}
+  );
+};
 
 export default Spinner;

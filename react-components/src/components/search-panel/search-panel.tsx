@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from "react";
+import { ChangeEvent, Component } from 'react';
 
 type SearchPanelProps = {
   updateData: (value: string) => void;
@@ -6,7 +6,7 @@ type SearchPanelProps = {
 
 class SearchPanel extends Component<SearchPanelProps> {
   state = {
-    inputValue: ''
+    inputValue: '',
   };
 
   saveToLocalStorage = (value: string) => {
@@ -36,21 +36,23 @@ class SearchPanel extends Component<SearchPanelProps> {
   render() {
     return (
       <div className="search-panel">
-        <input 
-          type="text" 
-          className="search-input" 
+        <input
+          type="text"
+          className="search-input"
           placeholder="Type here"
           value={this.state.inputValue}
           onChange={this.handleInputChange}
         />
-  
-        <button 
+
+        <button
           type="submit"
           className="search-btn"
           onClick={this.searchNewResults}
-        >Search</button>
+        >
+          Search
+        </button>
       </div>
-    )
+    );
   }
 }
 
