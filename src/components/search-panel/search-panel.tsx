@@ -1,60 +1,48 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import './search-panel.css';
 
-type SearchPanelProps = {
-  updateData: (value: string) => void;
-};
+const SearchPanel = (props: { updateData: (arg0: string) => void }) => {
+  const [inputValue, setInputValue] = useState('');
 
-class SearchPanel extends Component<SearchPanelProps> {
-  state = {
-    inputValue: '',
-  };
-
-  saveToLocalStorage = (value: string) => {
+  const saveToLocalStorage = (value: string) => {
     localStorage.setItem('searchInput', value);
   };
 
-  loadFromLocalStorage = () => {
+  const loadFromLocalStorage = () => {
     const savedValue = localStorage.getItem('searchInput');
     if (savedValue) {
-      this.setState({ inputValue: savedValue });
+      setInputValue(() => savedValue);
     }
   };
 
-  componentDidMount() {
-    this.loadFromLocalStorage();
-  }
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
 
-  searchNewResults = () => {
-    this.saveToLocalStorage(this.state.inputValue);
-    this.props.updateData(this.state.inputValue);
+  const searchNewResults = () => {
+    saveToLocalStorage(inputValue);
+    props.updateData(inputValue);
   };
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(() => e.target.value);
   };
 
-  render() {
-    return (
-      <div className="search-panel">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Type here"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-        />
+  return (
+    <div className="search-panel">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Type here"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
 
-        <button
-          type="submit"
-          className="search-btn"
-          onClick={this.searchNewResults}
-        >
-          Search
-        </button>
-      </div>
-    );
-  }
-}
+      <button type="submit" className="search-btn" onClick={searchNewResults}>
+        Search
+      </button>
+    </div>
+  );
+};
 
 export default SearchPanel;
