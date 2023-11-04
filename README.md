@@ -1,2 +1,2 @@
-# rsschool_REACT2023Q4
-RS School projects
+Task "React. Components":
+https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01
