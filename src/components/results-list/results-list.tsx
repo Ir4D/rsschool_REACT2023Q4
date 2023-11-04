@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ApiService from '../../services/api-service';
 import './results-list.css';
 
@@ -12,55 +12,50 @@ type Planet = {
   diameter: string;
 };
 
-type ResultsListProps = {
-  term: string;
-};
+const ResultsList = (props: { term: string }) => {
+  const [resultsList, setResultList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const prevPropsRef = useRef({ term: props.term });
 
-class ResultsList extends Component<ResultsListProps> {
-  state = {
-    resultsList: [],
-    loading: true,
-  };
+  const apiService = new ApiService();
 
-  apiService = new ApiService();
-
-  async componentDidMount() {
+  useEffect(() => {
     const savedSearchTerm = localStorage.getItem('searchInput');
     if (savedSearchTerm) {
-      await this.loadData(savedSearchTerm);
+      loadData(savedSearchTerm);
     } else {
-      await this.loadData(this.props.term);
+      loadData(props.term);
     }
-  }
+  }, []);
 
-  async componentDidUpdate(prevProps: ResultsListProps) {
-    if (prevProps.term !== this.props.term) {
-      this.setState({ loading: true });
-      await this.loadData(this.props.term);
-      this.setState({ loading: false });
-    }
-  }
-
-  async loadData(term: string) {
+  async function loadData(term: string) {
     try {
       let resultsList;
 
       if (term.length === 0) {
-        resultsList = await this.apiService.getAllPlanets();
+        resultsList = await apiService.getAllPlanets();
       } else {
-        resultsList = await this.apiService.getSearchPlanets(term);
+        resultsList = await apiService.getSearchPlanets(term);
       }
 
-      this.setState({
-        resultsList,
-        loading: false,
-      });
+      setResultList(resultsList);
+      setLoading(false);
     } catch (error) {
       console.error('Error loading data:', error);
     }
   }
 
-  renderPlanets(arr: Planet[]) {
+  useEffect(() => {
+    if (prevPropsRef.current.term !== props.term) {
+      setLoading(true);
+      loadData(props.term).then(() => {
+        setLoading(false);
+      });
+      prevPropsRef.current.term = props.term;
+    }
+  }, [props.term]);
+
+  function renderPlanets(arr: Planet[]) {
     if (!Array.isArray(arr) || arr.length === 0) {
       return <p>No planets were found</p>;
     }
@@ -88,17 +83,12 @@ class ResultsList extends Component<ResultsListProps> {
     return <ul className="planets-list">{planets}</ul>;
   }
 
-  render() {
-    const { resultsList, loading } = this.state;
-
-    if (loading) {
-      return <Spinner />;
-    }
-
-    const planets = this.renderPlanets(resultsList);
-
-    return <div className="results-panel">{planets}</div>;
+  if (loading) {
+    return <Spinner />;
   }
-}
+
+  const planets = renderPlanets(resultsList);
+  return <div className="results-panel">{planets}</div>;
+};
 
 export default ResultsList;
