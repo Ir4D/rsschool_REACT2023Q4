@@ -3,14 +3,13 @@ import { useState, useEffect, useRef } from 'react';
 import ApiService from '../../services/api-service';
 import './results-list.css';
 
-import planetImg from '../../assets/img/planet.png';
 import Spinner from '../spinner/spinner';
 
-type Planet = {
-  name: string;
-  terrain: string;
-  climate: string;
-  diameter: string;
+type Anime = {
+  title: string;
+  year: number;
+  type: string;
+  img: string;
 };
 
 const ResultsList = (props: { term: string }) => {
@@ -34,9 +33,10 @@ const ResultsList = (props: { term: string }) => {
       let resultsList;
 
       if (term.length === 0) {
-        resultsList = await apiService.getAllPlanets();
+        resultsList = await apiService.getAllItems();
+        console.log(resultsList);
       } else {
-        resultsList = await apiService.getSearchPlanets(term);
+        resultsList = await apiService.getSearchItems(term);
       }
 
       setResultList(resultsList);
@@ -56,40 +56,33 @@ const ResultsList = (props: { term: string }) => {
     }
   }, [props.term]);
 
-  function renderPlanets(arr: Planet[]) {
+  function renderPlanets(arr: Anime[]) {
     if (!Array.isArray(arr) || arr.length === 0) {
-      return <p>No planets were found</p>;
+      return <p>No anime were found</p>;
     }
 
-    const planets = arr.map((planet) => {
+    const animeList = arr.map((anime) => {
       return (
-        <li className="planet-item" key={planet.name}>
-          <img src={planetImg} alt="Planet" className="planet-img" />
-          <div className="planet-description">
-            <p className="planet-info planet-name">{planet.name}</p>
-            <p className="planet-info planet-terrain">
-              Terrain: {planet.terrain}
-            </p>
-            <p className="planet-info planet-climate">
-              Climate: {planet.climate}
-            </p>
-            <p className="planet-info planet-diameter">
-              Diameter: {planet.diameter}
-            </p>
+        <li className="anime-item" key={anime.title}>
+          <img src={anime.img} alt="Anime" className="anime-img" />
+          <div className="anime-description">
+            <p className="anime-info anime-title">{anime.title}</p>
+            <p className="anime-info anime-year">Year: {anime.year}</p>
+            <p className="anime-info anime-type">Type: {anime.type}</p>
           </div>
         </li>
       );
     });
 
-    return <ul className="planets-list">{planets}</ul>;
+    return <ul className="anime-list">{animeList}</ul>;
   }
 
   if (loading) {
     return <Spinner />;
   }
 
-  const planets = renderPlanets(resultsList);
-  return <div className="results-panel">{planets}</div>;
+  const animeList = renderPlanets(resultsList);
+  return <div className="results-panel">{animeList}</div>;
 };
 
 export default ResultsList;

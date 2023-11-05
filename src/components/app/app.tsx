@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <div>
-      <h1 className="app-heading">Star Wars Planets:</h1>
+      <h1 className="app-heading">Anime List:</h1>
       <SearchPanel updateData={updateData} />
       <ErrorBoundary>
         <ResultsList term={term} />
