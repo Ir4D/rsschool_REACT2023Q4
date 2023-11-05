@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import ApiService from '../../services/api-service';
 import './results-list.css';
 
 import Spinner from '../spinner/spinner';
+import PaginationPanel from '../pagination-panel/pagination-panel';
 
 type Anime = {
   title: string;
@@ -12,51 +13,49 @@ type Anime = {
   img: string;
 };
 
-const ResultsList = (props: { term: string }) => {
+const ResultsList = (props: {
+  term: string;
+  page: number;
+  setPage: (page: number) => void;
+  itemsPerPage: number;
+  setItemsPerPage: (value: number) => void;
+}) => {
   const [resultsList, setResultList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const prevPropsRef = useRef({ term: props.term });
 
   const apiService = new ApiService();
 
-  useEffect(() => {
-    const savedSearchTerm = localStorage.getItem('searchInput');
-    if (savedSearchTerm) {
-      loadData(savedSearchTerm);
-    } else {
-      loadData(props.term);
-    }
-  }, []);
-
-  async function loadData(term: string) {
+  const loadPageData = async (
+    term: string,
+    page: number,
+    itemsPerPage: number
+  ) => {
     try {
-      let resultsList;
+      let newResultsList;
 
       if (term.length === 0) {
-        resultsList = await apiService.getAllItems();
-        console.log(resultsList);
+        newResultsList = await apiService.getAllItems(page, itemsPerPage);
       } else {
-        resultsList = await apiService.getSearchItems(term);
+        newResultsList = await apiService.getSearchItems(
+          term,
+          page,
+          itemsPerPage
+        );
       }
 
-      setResultList(resultsList);
+      setResultList(newResultsList);
       setLoading(false);
     } catch (error) {
       console.error('Error loading data:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (prevPropsRef.current.term !== props.term) {
-      setLoading(true);
-      loadData(props.term).then(() => {
-        setLoading(false);
-      });
-      prevPropsRef.current.term = props.term;
-    }
-  }, [props.term]);
+    setLoading(true);
+    loadPageData(props.term, props.page, props.itemsPerPage);
+  }, [props.term, props.page, props.itemsPerPage]);
 
-  function renderPlanets(arr: Anime[]) {
+  function renderAnime(arr: Anime[]) {
     if (!Array.isArray(arr) || arr.length === 0) {
       return <p>No anime were found</p>;
     }
@@ -81,8 +80,18 @@ const ResultsList = (props: { term: string }) => {
     return <Spinner />;
   }
 
-  const animeList = renderPlanets(resultsList);
-  return <div className="results-panel">{animeList}</div>;
+  const animeList = renderAnime(resultsList);
+  return (
+    <>
+      <PaginationPanel
+        page={props.page}
+        updatePage={props.setPage}
+        itemsPerPage={props.itemsPerPage}
+        setItemsPerPage={props.setItemsPerPage}
+      />
+      <div className="results-panel">{animeList}</div>
+    </>
+  );
 };
 
 export default ResultsList;
