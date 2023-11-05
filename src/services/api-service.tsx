@@ -1,20 +1,16 @@
-class ApiService {
-  _apiUrl = 'https://api.jikan.moe/v4/anime';
+const ApiService = () => {
+  const _apiUrl = 'https://api.jikan.moe/v4/anime';
 
-  getData = async (url: string) => {
+  const getData = async (url: string) => {
     const data = await fetch(url);
-
     if (!data.ok) {
       throw new Error(`The ${url} cannot be fetched. ${data.status}`);
     }
-
     return await data.json();
   };
 
-  getAllItems = async (page: number, itemsPerPage: number) => {
-    const data = await this.getData(
-      `${this._apiUrl}?limit=${itemsPerPage}&page=${page}`
-    );
+  const getAllItems = async (page: number, itemsPerPage: number) => {
+    const data = await getData(`${_apiUrl}?limit=${itemsPerPage}&page=${page}`);
     return data.data.map(
       (elem: {
         mal_id: number;
@@ -35,13 +31,13 @@ class ApiService {
     );
   };
 
-  getSearchItems = async (
+  const getSearchItems = async (
     searchText: string,
     page: number,
     itemsPerPage: number
   ) => {
-    const data = await this.getData(
-      `${this._apiUrl}?q=${searchText}&limit=${itemsPerPage}&page=${page}`
+    const data = await getData(
+      `${_apiUrl}?q=${searchText}&limit=${itemsPerPage}&page=${page}`
     );
     return data.data.map(
       (elem: {
@@ -63,8 +59,8 @@ class ApiService {
     );
   };
 
-  getItemDetails = async (id: number) => {
-    const data = await this.getData(`${this._apiUrl}/${id}`);
+  const getItemDetails = async (id: number) => {
+    const data = await getData(`${_apiUrl}/${id}`);
     console.log('getItemDetails', data.data.title);
     return {
       id: data.data.mal_id,
@@ -74,6 +70,13 @@ class ApiService {
       img: data.data.images ? data.data.images.jpg.image_url : '',
     };
   };
-}
+
+  return {
+    getData,
+    getAllItems,
+    getSearchItems,
+    getItemDetails,
+  };
+};
 
 export default ApiService;

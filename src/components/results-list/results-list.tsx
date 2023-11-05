@@ -26,7 +26,7 @@ const ResultsList = (props: {
   const [loading, setLoading] = useState(true);
   const [, setSelectedAnime] = useState<Anime | null>(null);
 
-  const apiService = new ApiService();
+  const { getAllItems, getSearchItems } = ApiService();
 
   const loadPageData = async (
     term: string,
@@ -37,13 +37,9 @@ const ResultsList = (props: {
       let newResultsList;
 
       if (term.length === 0) {
-        newResultsList = await apiService.getAllItems(page, itemsPerPage);
+        newResultsList = await getAllItems(page, itemsPerPage);
       } else {
-        newResultsList = await apiService.getSearchItems(
-          term,
-          page,
-          itemsPerPage
-        );
+        newResultsList = await getSearchItems(term, page, itemsPerPage);
       }
 
       setResultList(newResultsList);

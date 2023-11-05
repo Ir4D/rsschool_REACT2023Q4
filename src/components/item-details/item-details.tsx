@@ -9,12 +9,12 @@ const Details = () => {
   const [resultItem, setResultItem] = useState(Object);
   const [loading, setLoading] = useState(true);
 
-  const apiService = new ApiService();
+  const { getItemDetails } = ApiService();
 
   useEffect(() => {
     const loadPageData = async () => {
       try {
-        const newResultItem = await apiService.getItemDetails(Number(id));
+        const newResultItem = await getItemDetails(Number(id));
         setResultItem(newResultItem);
         setLoading(false);
       } catch (error) {
@@ -23,7 +23,7 @@ const Details = () => {
     };
 
     loadPageData();
-  }, [apiService, id]);
+  }, [ApiService, id]);
 
   if (loading) {
     return <Spinner />;
