@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ApiService from '../../services/api-service';
@@ -22,7 +23,7 @@ const Details = () => {
     };
 
     loadPageData();
-  }, [id]);
+  }, [apiService, id]);
 
   if (loading) {
     return <Spinner />;
