@@ -40,7 +40,7 @@ const Details = () => {
             <p className="anime-info anime-type">Type: {resultItem.type}</p>
           </div>
           <Link to="/rsschool_REACT2023Q4/">
-            <button>Close</button>
+            <button className="item-details-btn">Close</button>
           </Link>
         </div>
       </div>

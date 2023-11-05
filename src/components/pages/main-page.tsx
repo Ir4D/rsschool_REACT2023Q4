@@ -24,9 +24,14 @@ const MainPage = () => {
     }
   };
 
+  const isMainPage = location.pathname !== '/rsschool_REACT2023Q4/';
+
   return (
     <div className="app-wrapper">
-      <div className="app-main" onClick={goToMainPage}>
+      <div
+        className={`app-main ${isMainPage ? 'unactive' : ''}`}
+        onClick={goToMainPage}
+      >
         <h1 className="app-heading">Anime List:</h1>
         <SearchPanel updateData={updateData} />
         <ErrorBoundary>

@@ -61,7 +61,6 @@ const ApiService = () => {
 
   const getItemDetails = async (id: number) => {
     const data = await getData(`${_apiUrl}/${id}`);
-    console.log('getItemDetails', data.data.title);
     return {
       id: data.data.mal_id,
       title: data.data.title,
