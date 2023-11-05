@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ApiService from '../../services/api-service';
 import Spinner from '../spinner/spinner';
 
@@ -39,6 +39,9 @@ const Details = () => {
             <p className="anime-info anime-year">Year: {resultItem.year}</p>
             <p className="anime-info anime-type">Type: {resultItem.type}</p>
           </div>
+          <Link to="/rsschool_REACT2023Q4/">
+            <button>Close</button>
+          </Link>
         </div>
       </div>
     </>
