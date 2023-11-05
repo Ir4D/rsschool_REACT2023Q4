@@ -1,34 +1,18 @@
-import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import SearchPanel from '../search-panel/search-panel';
-import ResultsList from '../results-list/results-list';
-import ErrorBoundary from '../errorBoundary/ErrorBoundary';
-
+import MainPage from '../pages/main-page';
 import './app.css';
+import Details from '../item-details/item-details';
 
 const App = () => {
-  const [term, setTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(12);
-
-  const updateData = (value: string) => {
-    setTerm(value);
-  };
-
   return (
-    <div>
-      <h1 className="app-heading">Anime List:</h1>
-      <SearchPanel updateData={updateData} />
-      <ErrorBoundary>
-        <ResultsList
-          term={term}
-          page={currentPage}
-          setPage={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-        />
-      </ErrorBoundary>
-    </div>
+    <>
+      <Routes>
+        <Route path="/rsschool_REACT2023Q4/" element={<MainPage />}>
+          <Route path="details/:id" element={<Details />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 

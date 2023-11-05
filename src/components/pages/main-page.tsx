@@ -1,0 +1,47 @@
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import SearchPanel from '../search-panel/search-panel';
+import ResultsList from '../results-list/results-list';
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
+
+import './main-page.css';
+import { Outlet } from 'react-router-dom';
+
+const MainPage = () => {
+  const [term, setTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const updateData = (value: string) => {
+    setTerm(value);
+  };
+
+  const goToMainPage = () => {
+    if (location.pathname !== '/rsschool_REACT2023Q4/') {
+      navigate('/rsschool_REACT2023Q4/');
+    }
+  };
+
+  return (
+    <div className="app-wrapper">
+      <div className="app-main" onClick={goToMainPage}>
+        <h1 className="app-heading">Anime List:</h1>
+        <SearchPanel updateData={updateData} />
+        <ErrorBoundary>
+          <ResultsList
+            term={term}
+            page={currentPage}
+            setPage={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+          />
+        </ErrorBoundary>
+      </div>
+      <Outlet />
+    </div>
+  );
+};
+
+export default MainPage;

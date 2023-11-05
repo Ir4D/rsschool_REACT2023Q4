@@ -49,6 +49,7 @@ const PaginationPanel = (props: {
           onClick={showNextPage}
           disabled={isNextButtonDisabled}
         >
+          {/* <Link to={`/rsschool_REACT2023Q4/${props.page}`}>Next</Link> */}
           Next
         </button>
       </div>

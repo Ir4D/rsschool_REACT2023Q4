@@ -1,6 +1,5 @@
 class ApiService {
   _apiUrl = 'https://api.jikan.moe/v4/anime';
-  limit = 12;
 
   getData = async (url: string) => {
     const data = await fetch(url);
@@ -18,6 +17,7 @@ class ApiService {
     );
     return data.data.map(
       (elem: {
+        mal_id: number;
         title: string;
         year: number;
         type: string;
@@ -25,6 +25,7 @@ class ApiService {
         image_url: string;
       }) => {
         return {
+          id: elem.mal_id,
           title: elem.title,
           year: elem.year ? elem.year : 'Unknown',
           type: elem.type ? elem.type : 'Unknown',
@@ -44,6 +45,7 @@ class ApiService {
     );
     return data.data.map(
       (elem: {
+        mal_id: number;
         title: string;
         year: number;
         type: string;
@@ -51,6 +53,7 @@ class ApiService {
         image_url: string;
       }) => {
         return {
+          id: elem.mal_id,
           title: elem.title,
           year: elem.year ? elem.year : 'Unknown',
           type: elem.type ? elem.type : 'Unknown',
@@ -58,6 +61,18 @@ class ApiService {
         };
       }
     );
+  };
+
+  getItemDetails = async (id: number) => {
+    const data = await this.getData(`${this._apiUrl}/${id}`);
+    console.log('getItemDetails', data.data.title);
+    return {
+      id: data.data.mal_id,
+      title: data.data.title,
+      year: data.data.year ? data.data.year : 'Unknown',
+      type: data.data.type ? data.data.type : 'Unknown',
+      img: data.data.images ? data.data.images.jpg.image_url : '',
+    };
   };
 }
 
