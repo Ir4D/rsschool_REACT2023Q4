@@ -11,7 +11,6 @@ type Anime = {
   id: number;
   title: string;
   year: number;
-  type: string;
   img: string;
 };
 
@@ -75,7 +74,6 @@ const ResultsList = (props: {
             <div className="anime-description">
               <p className="anime-info anime-title">{anime.title}</p>
               <p className="anime-info anime-year">Year: {anime.year}</p>
-              <p className="anime-info anime-type">Type: {anime.type}</p>
             </div>
           </li>
         </Link>

@@ -24,7 +24,6 @@ const ApiService = () => {
           id: elem.mal_id,
           title: elem.title,
           year: elem.year ? elem.year : 'Unknown',
-          type: elem.type ? elem.type : 'Unknown',
           img: elem.images ? elem.images.jpg.image_url : '',
         };
       }
@@ -52,7 +51,6 @@ const ApiService = () => {
           id: elem.mal_id,
           title: elem.title,
           year: elem.year ? elem.year : 'Unknown',
-          type: elem.type ? elem.type : 'Unknown',
           img: elem.images ? elem.images.jpg.image_url : '',
         };
       }
@@ -64,8 +62,11 @@ const ApiService = () => {
     return {
       id: data.data.mal_id,
       title: data.data.title,
+      titleJp: data.data.title_japanese,
       year: data.data.year ? data.data.year : 'Unknown',
       type: data.data.type ? data.data.type : 'Unknown',
+      score: data.data.score ? data.data.score : 'Unknown',
+      rating: data.data.rating ? data.data.rating : 'Unknown',
       img: data.data.images ? data.data.images.jpg.image_url : '',
     };
   };
