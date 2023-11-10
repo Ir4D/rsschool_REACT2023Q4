@@ -24,7 +24,6 @@ const SearchPanel = () => {
 
   const searchNewResults = () => {
     saveToLocalStorage(inputValue);
-    // props.updateData(inputValue);
     updateData(inputValue);
   };
 

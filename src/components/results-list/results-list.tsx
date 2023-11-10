@@ -29,8 +29,6 @@ const ResultsList: React.FC<ResultsListProps> = ({
   setItemsPerPage,
 }) => {
   const { term } = useContext(Context);
-  // const {setTerm} = useContext(CurrentTermContext);
-  // const [resultsList, setResultList] = useState([]);
   const { resultsList, setResultList } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [, setSelectedAnime] = useState<Anime | null>(null);

@@ -14,8 +14,6 @@ type ContextProps = {
   setResultList: (value: []) => void;
 };
 
-// export const Context = createContext();
-// export const Context = createContext<ContextProps | undefined>(undefined);
 export const Context = createContext<ContextProps>({
   term: '',
   setTerm: () => {},
@@ -63,7 +61,6 @@ const MainPage = () => {
           <SearchPanel />
           <ErrorBoundary>
             <ResultsList
-              // term={term}
               page={currentPage}
               setPage={setCurrentPage}
               itemsPerPage={itemsPerPage}
