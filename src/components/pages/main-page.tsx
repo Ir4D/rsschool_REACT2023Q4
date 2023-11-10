@@ -1,14 +1,32 @@
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, createContext } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import SearchPanel from '../search-panel/search-panel';
 import ResultsList from '../results-list/results-list';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './main-page.css';
-import { Outlet } from 'react-router-dom';
+
+type ContextProps = {
+  term: string;
+  setTerm: (value: string) => void;
+  updateData: (value: string) => void;
+  resultsList: never[];
+  setResultList: (value: []) => void;
+};
+
+// export const Context = createContext();
+// export const Context = createContext<ContextProps | undefined>(undefined);
+export const Context = createContext<ContextProps>({
+  term: '',
+  setTerm: () => {},
+  updateData: () => {},
+  resultsList: [],
+  setResultList: () => {},
+});
 
 const MainPage = () => {
   const [term, setTerm] = useState('');
+  const [resultsList, setResultList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const navigate = useNavigate();
@@ -27,25 +45,35 @@ const MainPage = () => {
   const isMainPage = location.pathname !== '/rsschool_REACT2023Q4/';
 
   return (
-    <div className="app-wrapper">
-      <div
-        className={`app-main ${isMainPage ? 'unactive' : ''}`}
-        onClick={goToMainPage}
-      >
-        <h1 className="app-heading">Anime List:</h1>
-        <SearchPanel updateData={updateData} />
-        <ErrorBoundary>
-          <ResultsList
-            term={term}
-            page={currentPage}
-            setPage={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            setItemsPerPage={setItemsPerPage}
-          />
-        </ErrorBoundary>
+    <Context.Provider
+      value={{
+        term,
+        setTerm,
+        updateData,
+        resultsList,
+        setResultList,
+      }}
+    >
+      <div className="app-wrapper">
+        <div
+          className={`app-main ${isMainPage ? 'unactive' : ''}`}
+          onClick={goToMainPage}
+        >
+          <h1 className="app-heading">Anime List:</h1>
+          <SearchPanel />
+          <ErrorBoundary>
+            <ResultsList
+              // term={term}
+              page={currentPage}
+              setPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              setItemsPerPage={setItemsPerPage}
+            />
+          </ErrorBoundary>
+        </div>
+        <Outlet />
       </div>
-      <Outlet />
-    </div>
+    </Context.Provider>
   );
 };
 

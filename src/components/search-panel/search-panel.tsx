@@ -1,8 +1,11 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useContext } from 'react';
+import { Context } from '../pages/main-page';
+
 import './search-panel.css';
 
-const SearchPanel = (props: { updateData: (arg0: string) => void }) => {
+const SearchPanel = () => {
   const [inputValue, setInputValue] = useState('');
+  const { updateData } = useContext(Context);
 
   const saveToLocalStorage = (value: string) => {
     localStorage.setItem('searchInput', value);
@@ -21,7 +24,8 @@ const SearchPanel = (props: { updateData: (arg0: string) => void }) => {
 
   const searchNewResults = () => {
     saveToLocalStorage(inputValue);
-    props.updateData(inputValue);
+    // props.updateData(inputValue);
+    updateData(inputValue);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

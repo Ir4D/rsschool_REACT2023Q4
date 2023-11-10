@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-
 import MainPage from '../pages/main-page';
-import './app.css';
 import Details from '../item-details/item-details';
+
+import './app.css';
 
 const App = () => {
   return (
