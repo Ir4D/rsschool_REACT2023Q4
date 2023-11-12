@@ -1,8 +1,10 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import MainPage from './components/pages/main-page';
 import Details from './components/item-details/item-details';
 import ResultsList from './components/results-list/results-list';
+import { BrowserRouter as Router } from 'react-router-dom';
+import '@testing-library/jest-dom';
 
 // test("renders App", async () => {
 //   // render(
@@ -46,4 +48,26 @@ test('renders ResultsList (CardList)', () => {
       }}
     />
   );
+});
+
+describe('MainPage', () => {
+  test('renders MainPage', () => {
+    render(
+      <Router>
+        <MainPage />
+      </Router>
+    );
+    expect(screen.getByText('Anime List:')).toBeInTheDocument();
+  });
+
+  test('updates term when search input changes', () => {
+    render(
+      <Router>
+        <MainPage />
+      </Router>
+    );
+    const searchInput = screen.getByPlaceholderText('Type here');
+    fireEvent.change(searchInput, { target: { value: 'Naruto' } });
+    expect(searchInput).toHaveValue('Naruto');
+  });
 });
