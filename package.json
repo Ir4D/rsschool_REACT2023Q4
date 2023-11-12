@@ -13,19 +13,19 @@
     "lint:fix": "eslint ./src --fix --color",
     "precommit": "lint-staged",
     "prettier": "prettier ./src --write",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:coverage": "jest --coverage"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
     }
   },
   "lint-staged": {
     "*.tsx": [
       "prettier --write",
-      "eslint --fix",
-      "jest --coverage"
+      "eslint --fix"
     ],
     "*.html": [
       "prettier --write"
