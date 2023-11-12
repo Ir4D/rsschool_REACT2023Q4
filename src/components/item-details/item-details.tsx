@@ -19,34 +19,37 @@ const Details = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     loadPageData();
-  }, [ApiService, id]);
-
-  if (loading) {
-    return <Spinner />;
-  }
+  }, [getItemDetails, id]);
 
   return (
     <>
-      <div className="item-details">
-        <div>
-          <img src={resultItem.img} alt="Anime" className="anime-img" />
-          <div className="anime-description">
-            <p className="anime-info anime-title">{resultItem.title}</p>
-            <p className="anime-info anime-title">{resultItem.titleJp}</p>
-            <p className="anime-info anime-year">Year: {resultItem.year}</p>
-            <p className="anime-info anime-type">Type: {resultItem.type}</p>
-            <p className="anime-info anime-type">Score: {resultItem.score}</p>
-            <p className="anime-info anime-type">Rating: {resultItem.rating}</p>
+      {loading && <Spinner />}
+      {!loading && (
+        <div className="item-details" data-testid="Anime">
+          <div>
+            <img src={resultItem.img} alt="Anime" className="anime-img" />
+            <div className="anime-description">
+              <p className="anime-info anime-title">{resultItem.title}</p>
+              <p className="anime-info anime-title">{resultItem.titleJp}</p>
+              <p className="anime-info anime-year">Year: {resultItem.year}</p>
+              <p className="anime-info anime-type">Type: {resultItem.type}</p>
+              <p className="anime-info anime-type">Score: {resultItem.score}</p>
+              <p className="anime-info anime-type">
+                Rating: {resultItem.rating}
+              </p>
+            </div>
+            <Link to="/rsschool_REACT2023Q4/">
+              <button className="item-details-btn">Close</button>
+            </Link>
           </div>
-          <Link to="/rsschool_REACT2023Q4/">
-            <button className="item-details-btn">Close</button>
-          </Link>
         </div>
-      </div>
+      )}
     </>
   );
 };

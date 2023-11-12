@@ -1,37 +1,42 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import MainPage from './components/pages/main-page';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { Routes, Route, BrowserRouter, MemoryRouter } from 'react-router-dom';
+import MainPage, { Context, ContextProps } from './components/pages/main-page';
 import Details from './components/item-details/item-details';
 import ResultsList from './components/results-list/results-list';
 import { BrowserRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom';
+import ApiService from './services/api-service';
 
-// test("renders App", async () => {
-//   // render(
-//   //   <Router location={''} navigator={undefined as unknown as Navigator}>
-//   //     <App />
-//   //   </Router>
-//   // );
-
-//   // await waitFor(() => {
-//   //   const headings = screen.findAllByRole('heading', { level: 3 });
-//   //   expect(headings).toHaveLength(12);
-//   // });
-// });
+const apiService = ApiService();
 
 describe('App', () => {
   it('renders App component', async () => {
     render(
       <BrowserRouter>
         <Routes>
-          <Route path="/rsschool_REACT2023Q4/" element={<MainPage />}>
+          <Route
+            path="/rsschool_REACT2023Q4/"
+            element={
+              <MainPage
+                term={''}
+                setTerm={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+                updateData={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+                resultsList={[]}
+                setResultList={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            }
+          >
             <Route path="details/:id" element={<Details />} />
           </Route>
         </Routes>
       </BrowserRouter>
     );
-
-    // await screen.getByText("Anime List:");
   });
 });
 
@@ -54,7 +59,19 @@ describe('MainPage', () => {
   test('renders MainPage', () => {
     render(
       <Router>
-        <MainPage />
+        <MainPage
+          term={''}
+          setTerm={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          updateData={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          resultsList={[]}
+          setResultList={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </Router>
     );
     expect(screen.getByText('Anime List:')).toBeInTheDocument();
@@ -63,11 +80,189 @@ describe('MainPage', () => {
   test('updates term when search input changes', () => {
     render(
       <Router>
-        <MainPage />
+        <MainPage
+          term={''}
+          setTerm={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          updateData={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          resultsList={[]}
+          setResultList={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </Router>
     );
     const searchInput = screen.getByPlaceholderText('Type here');
     fireEvent.change(searchInput, { target: { value: 'Naruto' } });
     expect(searchInput).toHaveValue('Naruto');
+  });
+});
+
+jest.mock('./services/api-service', () => ({
+  __esModule: true,
+  ...jest.requireActual('./services/api-service'),
+  getItemDetails: jest.fn(),
+  getAllItems: jest.fn(),
+}));
+
+describe('Tests for the ResultsList component', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('Test for the ResultsList component', async () => {
+    const mockResults = [
+      {
+        id: 1,
+        title: 'Sample Anime',
+        year: 2022,
+        img: 'sample-image-url',
+      },
+    ];
+
+    (
+      jest.requireMock('./services/api-service') as {
+        getAllItems: jest.Mock<Promise<unknown>, [number, number]>;
+      }
+    ).getAllItems.mockResolvedValue(mockResults);
+
+    const contextValues: ContextProps = {
+      term: '',
+      setTerm: jest.fn(),
+      updateData: jest.fn(),
+      resultsList: [],
+      setResultList: jest.fn(),
+    };
+
+    render(
+      <MemoryRouter initialEntries={['/rsschool_REACT2023Q4/']}>
+        <Context.Provider value={contextValues}>
+          <Routes>
+            <Route
+              path="/rsschool_REACT2023Q4/"
+              element={
+                <MainPage
+                  term={''}
+                  setTerm={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                  updateData={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                  resultsList={[]}
+                  setResultList={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              }
+            />
+          </Routes>
+        </Context.Provider>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe('tests for Details Component', () => {
+  test('Check that a loading indicator is displayed while fetching data', async () => {
+    const mockResults = [
+      {
+        id: 1,
+        title: 'Sample Anime',
+        year: 2022,
+        img: 'sample-image-url',
+      },
+    ];
+
+    (
+      jest.requireMock('./services/api-service') as {
+        getItemDetails: jest.Mock<Promise<unknown>, [number, number]>;
+      }
+    ).getItemDetails.mockResolvedValueOnce(mockResults);
+
+    const contextValues: ContextProps = {
+      term: '',
+      setTerm: jest.fn(),
+      updateData: jest.fn(),
+      resultsList: [],
+      setResultList: jest.fn(),
+    };
+
+    render(
+      <MemoryRouter initialEntries={['/rsschool_REACT2023Q4/']}>
+        <Context.Provider value={contextValues}>
+          <Routes>
+            <Route
+              path="/rsschool_REACT2023Q4/"
+              element={
+                <MainPage
+                  term={''}
+                  setTerm={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                  updateData={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                  resultsList={[]}
+                  setResultList={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              }
+            />
+          </Routes>
+        </Context.Provider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('spinner')).toBeNull();
+    });
+  });
+});
+
+describe('Details Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('renders details correctly', async () => {
+    const mockGetItemDetails = jest.spyOn(apiService, 'getItemDetails');
+    mockGetItemDetails.mockResolvedValue({
+      id: 1,
+      title: 'Sample Anime',
+      titleJp: 'Sample Japanese Title',
+      year: 2022,
+      type: 'TV',
+      score: 8.5,
+      rating: 'PG-13',
+      img: 'sample-image-url',
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/rsschool_REACT2023Q4/details/1']}>
+        <Routes>
+          <Route
+            path="/rsschool_REACT2023Q4/details/:id"
+            element={<Details />}
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('spinner')).toBeNull();
+    });
+
+    expect(screen.getByText('Close')).toBeInTheDocument();
   });
 });

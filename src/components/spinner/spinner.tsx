@@ -15,6 +15,7 @@ const Spinner = () => {
       height="200px"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
+      data-testid="spinner"
     >
       {Array(12)
         .fill(null)

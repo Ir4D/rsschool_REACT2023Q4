@@ -6,12 +6,13 @@ import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './main-page.css';
 
-type ContextProps = {
+export type ContextProps = {
   term: string;
   setTerm: (value: string) => void;
   updateData: (value: string) => void;
   resultsList: never[];
   setResultList: (value: []) => void;
+  children?: React.ReactNode;
 };
 
 export const Context = createContext<ContextProps>({
@@ -22,7 +23,7 @@ export const Context = createContext<ContextProps>({
   setResultList: () => {},
 });
 
-const MainPage = () => {
+const MainPage: React.FC<ContextProps> = ({ children }) => {
   const [term, setTerm] = useState('');
   const [resultsList, setResultList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,6 +68,7 @@ const MainPage = () => {
               setItemsPerPage={setItemsPerPage}
             />
           </ErrorBoundary>
+          {children}
         </div>
         <Outlet />
       </div>

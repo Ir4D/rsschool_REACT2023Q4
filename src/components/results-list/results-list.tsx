@@ -50,9 +50,10 @@ const ResultsList: React.FC<ResultsListProps> = ({
       }
 
       setResultList(newResultsList);
-      setLoading(false);
     } catch (error) {
       console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,41 +71,39 @@ const ResultsList: React.FC<ResultsListProps> = ({
       return <p>No anime were found</p>;
     }
 
-    const animeList = arr.map((anime) => {
-      return (
-        <Link
-          to={`/rsschool_REACT2023Q4/details/${anime.id}`}
-          key={anime.id}
-          onClick={() => handleAnimeClick(anime)}
-        >
-          <li className="anime-item" onClick={() => handleAnimeClick(anime)}>
-            <img src={anime.img} alt="Anime" className="anime-img" />
-            <div className="anime-description">
-              <h3 className="anime-info anime-title">{anime.title}</h3>
-              <p className="anime-info anime-year">Year: {anime.year}</p>
-            </div>
-          </li>
-        </Link>
-      );
-    });
+    const animeList = arr.map((anime) => (
+      <Link
+        to={`/rsschool_REACT2023Q4/details/${anime.id}`}
+        key={anime.id}
+        onClick={() => handleAnimeClick(anime)}
+      >
+        <li className="anime-item" onClick={() => handleAnimeClick(anime)}>
+          <img src={anime.img} alt="Anime" className="anime-img" />
+          <div className="anime-description">
+            <h3 className="anime-info anime-title">{anime.title}</h3>
+            <p className="anime-info anime-year">Year: {anime.year}</p>
+          </div>
+        </li>
+      </Link>
+    ));
 
     return <ul className="anime-list">{animeList}</ul>;
   }
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  const animeList = renderAnime(resultsList);
   return (
     <>
-      <PaginationPanel
-        page={page}
-        updatePage={setPage}
-        itemsPerPage={itemsPerPage}
-        setItemsPerPage={setItemsPerPage}
-      />
-      <div className="results-panel">{animeList}</div>
+      {loading && <Spinner />}
+      {!loading && (
+        <>
+          <PaginationPanel
+            page={page}
+            updatePage={setPage}
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+          />
+          <div className="results-panel">{renderAnime(resultsList)}</div>
+        </>
+      )}
     </>
   );
 };
