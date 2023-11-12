@@ -80,7 +80,7 @@ const ResultsList: React.FC<ResultsListProps> = ({
           <li className="anime-item" onClick={() => handleAnimeClick(anime)}>
             <img src={anime.img} alt="Anime" className="anime-img" />
             <div className="anime-description">
-              <p className="anime-info anime-title">{anime.title}</p>
+              <h3 className="anime-info anime-title">{anime.title}</h3>
               <p className="anime-info anime-year">Year: {anime.year}</p>
             </div>
           </li>
