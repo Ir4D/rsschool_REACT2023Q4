@@ -108,12 +108,12 @@ jest.mock('./services/api-service', () => ({
   getAllItems: jest.fn(),
 }));
 
-describe('Tests for the ResultsList component', () => {
+describe('Tests for the Card List component:', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('Test for the ResultsList component', async () => {
+  test('Check that an appropriate message is displayed if no cards are present', async () => {
     const mockResults = [
       {
         id: 1,
@@ -169,6 +169,7 @@ describe('Tests for the ResultsList component', () => {
     await waitFor(() => {
       expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
     });
+    expect(screen.getByText('No anime were found')).toBeInTheDocument();
   });
 });
 
@@ -235,7 +236,7 @@ describe('Details Component', () => {
     jest.clearAllMocks();
   });
 
-  test('renders details correctly', async () => {
+  test('renders details', async () => {
     const mockGetItemDetails = jest.spyOn(apiService, 'getItemDetails');
     mockGetItemDetails.mockResolvedValue({
       id: 1,
