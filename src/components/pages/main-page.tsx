@@ -5,10 +5,11 @@ import ResultsList from '../results-list/results-list';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './main-page.css';
+import { useDispatch } from 'react-redux';
 
 export type ContextProps = {
-  term: string;
-  setTerm: (value: string) => void;
+  // term: string;
+  // setTerm: (value: string) => void;
   updateData: (value: string) => void;
   resultsList: never[];
   setResultList: (value: []) => void;
@@ -16,23 +17,26 @@ export type ContextProps = {
 };
 
 export const Context = createContext<ContextProps>({
-  term: '',
-  setTerm: () => {},
+  // term: '',
+  // setTerm: () => {},
   updateData: () => {},
   resultsList: [],
   setResultList: () => {},
 });
 
 const MainPage: React.FC<ContextProps> = ({ children }) => {
-  const [term, setTerm] = useState('');
+  // const [term, setTerm] = useState('');
   const [resultsList, setResultList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const navigate = useNavigate();
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   const updateData = (value: string) => {
-    setTerm(value);
+    // setTerm(value);
+    dispatch({ type: 'newTerm', payload: value });
   };
 
   const goToMainPage = () => {
@@ -46,8 +50,8 @@ const MainPage: React.FC<ContextProps> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        term,
-        setTerm,
+        // term,
+        // setTerm,
         updateData,
         resultsList,
         setResultList,

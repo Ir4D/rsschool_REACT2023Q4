@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect, useContext } from 'react';
 import { Context } from '../pages/main-page';
+import { useDispatch } from 'react-redux';
 
 import './search-panel.css';
 
@@ -22,7 +23,10 @@ const SearchPanel = () => {
     loadFromLocalStorage();
   }, []);
 
+  const dispatch = useDispatch();
+
   const searchNewResults = () => {
+    dispatch({ type: 'newTerm', payload: inputValue });
     saveToLocalStorage(inputValue);
     updateData(inputValue);
   };

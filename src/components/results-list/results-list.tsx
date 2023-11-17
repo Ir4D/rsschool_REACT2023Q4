@@ -7,6 +7,7 @@ import PaginationPanel from '../pagination-panel/pagination-panel';
 import { Context } from '../pages/main-page';
 
 import './results-list.css';
+import { useSelector } from 'react-redux';
 
 type Anime = {
   id: number;
@@ -28,7 +29,12 @@ const ResultsList: React.FC<ResultsListProps> = ({
   itemsPerPage,
   setItemsPerPage,
 }) => {
-  const { term } = useContext(Context);
+  // const { term } = useContext(Context);
+  // const term = useSelector(state => state.term);
+  const term = useSelector(
+    (state: unknown) => (state as { term: string }).term
+  );
+
   const { resultsList, setResultList } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [, setSelectedAnime] = useState<Anime | null>(null);
