@@ -18,10 +18,6 @@ const App = () => {
           path="/rsschool_REACT2023Q4/"
           element={
             <MainPage
-              // term={''}
-              // setTerm={function (): void {
-              //   throw new Error('Function not implemented.');
-              // }}
               updateData={function (): void {
                 throw new Error('Function not implemented.');
               }}

@@ -1,44 +1,47 @@
-// import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-// import { Routes, Route, BrowserRouter, MemoryRouter } from 'react-router-dom';
-// import MainPage, { Context, ContextProps } from './components/pages/main-page';
-// import Details from './components/item-details/item-details';
+import { render } from '@testing-library/react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import MainPage from './components/pages/main-page';
+import Details from './components/item-details/item-details';
 // import ResultsList from './components/results-list/results-list';
 // import { BrowserRouter as Router } from 'react-router-dom';
-// import '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 // import ApiService from './services/api-service';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducer';
 
 // const apiService = ApiService();
 
-// describe('App', () => {
-//   it('renders App component', async () => {
-//     render(
-//       <BrowserRouter>
-//         <Routes>
-//           <Route
-//             path="/rsschool_REACT2023Q4/"
-//             element={
-//               <MainPage
-//                 term={''}
-//                 setTerm={function (): void {
-//                   throw new Error('Function not implemented.');
-//                 }}
-//                 updateData={function (): void {
-//                   throw new Error('Function not implemented.');
-//                 }}
-//                 resultsList={[]}
-//                 setResultList={function (): void {
-//                   throw new Error('Function not implemented.');
-//                 }}
-//               />
-//             }
-//           >
-//             <Route path="details/:id" element={<Details />} />
-//           </Route>
-//         </Routes>
-//       </BrowserRouter>
-//     );
-//   });
-// });
+describe('App', () => {
+  it('renders App component', async () => {
+    const store = createStore(reducer);
+
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/rsschool_REACT2023Q4/"
+              element={
+                <MainPage
+                  updateData={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                  resultsList={[]}
+                  setResultList={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              }
+            >
+              <Route path="details/:id" element={<Details />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    );
+  });
+});
 
 // test('renders ResultsList (CardList)', () => {
 //   render(

@@ -29,8 +29,6 @@ const ResultsList: React.FC<ResultsListProps> = ({
   itemsPerPage,
   setItemsPerPage,
 }) => {
-  // const { term } = useContext(Context);
-  // const term = useSelector(state => state.term);
   const term = useSelector(
     (state: unknown) => (state as { term: string }).term
   );
