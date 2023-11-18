@@ -1,5 +1,5 @@
-import { ChangeEvent, useState, useEffect, useContext } from 'react';
-import { Context } from '../pages/main-page';
+import { ChangeEvent, useState, useEffect } from 'react';
+// import { Context } from '../pages/main-page';
 import { useDispatch } from 'react-redux';
 
 import './search-panel.css';
@@ -7,7 +7,7 @@ import { changeTerm } from '../../reducer';
 
 const SearchPanel = () => {
   const [inputValue, setInputValue] = useState('');
-  const { updateData } = useContext(Context);
+  // const { updateData } = useContext(Context);
 
   const saveToLocalStorage = (value: string) => {
     localStorage.setItem('searchInput', value);
@@ -30,7 +30,7 @@ const SearchPanel = () => {
     // dispatch({ type: 'newTerm', payload: inputValue });
     dispatch(changeTerm(inputValue));
     saveToLocalStorage(inputValue);
-    updateData(inputValue);
+    // updateData(inputValue);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

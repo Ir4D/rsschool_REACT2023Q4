@@ -1,8 +1,8 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 // const initialState = {
 //   term: '',
 // };
-
-import { createSlice } from '@reduxjs/toolkit';
 
 // const reducer = (
 //   state = initialState,
@@ -22,13 +22,18 @@ const toolkitSlice = createSlice({
   name: 'toolkit',
   initialState: {
     term: '',
+    resultsList: [],
   },
   reducers: {
     changeTerm(state, action) {
       state.term = action.payload;
     },
+    changeResultList(state, action) {
+      state.resultsList = action.payload;
+      console.log(state.resultsList);
+    },
   },
 });
 
 export default toolkitSlice.reducer;
-export const { changeTerm } = toolkitSlice.actions;
+export const { changeTerm, changeResultList } = toolkitSlice.actions;

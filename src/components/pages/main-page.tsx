@@ -1,37 +1,37 @@
-import { useState, createContext } from 'react';
+import { useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import SearchPanel from '../search-panel/search-panel';
 import ResultsList from '../results-list/results-list';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './main-page.css';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 export type ContextProps = {
-  updateData: (value: string) => void;
-  resultsList: never[];
-  setResultList: (value: []) => void;
+  // updateData: (value: string) => void;
+  // resultsList: never[];
+  // setResultList: (value: []) => void;
   children?: React.ReactNode;
 };
 
-export const Context = createContext<ContextProps>({
-  updateData: () => {},
-  resultsList: [],
-  setResultList: () => {},
-});
+// export const Context = createContext<ContextProps>({
+//   // updateData: () => {},
+//   // resultsList: [],
+//   // setResultList: () => {},
+// });
 
 const MainPage: React.FC<ContextProps> = ({ children }) => {
-  const [resultsList, setResultList] = useState([]);
+  // const [resultsList, setResultList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const updateData = (value: string) => {
-    dispatch({ type: 'newTerm', payload: value });
-  };
+  // const updateData = (value: string) => {
+  //   dispatch({ type: 'newTerm', payload: value });
+  // };
 
   const goToMainPage = () => {
     if (location.pathname !== '/rsschool_REACT2023Q4/') {
@@ -42,33 +42,33 @@ const MainPage: React.FC<ContextProps> = ({ children }) => {
   const isMainPage = location.pathname !== '/rsschool_REACT2023Q4/';
 
   return (
-    <Context.Provider
-      value={{
-        updateData,
-        resultsList,
-        setResultList,
-      }}
-    >
-      <div className="app-wrapper">
-        <div
-          className={`app-main ${isMainPage ? 'unactive' : ''}`}
-          onClick={goToMainPage}
-        >
-          <h1 className="app-heading">Anime List:</h1>
-          <SearchPanel />
-          <ErrorBoundary>
-            <ResultsList
-              page={currentPage}
-              setPage={setCurrentPage}
-              itemsPerPage={itemsPerPage}
-              setItemsPerPage={setItemsPerPage}
-            />
-          </ErrorBoundary>
-          {children}
-        </div>
-        <Outlet />
+    // <Context.Provider
+    //   value={{
+    //     // updateData,
+    //     // resultsList,
+    //     // setResultList,
+    //   }}
+    // >
+    <div className="app-wrapper">
+      <div
+        className={`app-main ${isMainPage ? 'unactive' : ''}`}
+        onClick={goToMainPage}
+      >
+        <h1 className="app-heading">Anime List:</h1>
+        <SearchPanel />
+        <ErrorBoundary>
+          <ResultsList
+            page={currentPage}
+            setPage={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+          />
+        </ErrorBoundary>
+        {children}
       </div>
-    </Context.Provider>
+      <Outlet />
+    </div>
+    // </Context.Provider>
   );
 };
 
