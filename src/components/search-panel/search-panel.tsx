@@ -3,6 +3,7 @@ import { Context } from '../pages/main-page';
 import { useDispatch } from 'react-redux';
 
 import './search-panel.css';
+import { changeTerm } from '../../reducer';
 
 const SearchPanel = () => {
   const [inputValue, setInputValue] = useState('');
@@ -26,7 +27,8 @@ const SearchPanel = () => {
   const dispatch = useDispatch();
 
   const searchNewResults = () => {
-    dispatch({ type: 'newTerm', payload: inputValue });
+    // dispatch({ type: 'newTerm', payload: inputValue });
+    dispatch(changeTerm(inputValue));
     saveToLocalStorage(inputValue);
     updateData(inputValue);
   };

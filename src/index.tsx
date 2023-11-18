@@ -2,13 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/app/app';
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducer';
+import toolkitSlice from './reducer';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import './index.css';
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+  toolkit: toolkitSlice,
+});
+
+export const store = configureStore({
+  reducer: rootReducer,
+});
+
+// const store = createStore(reducer);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

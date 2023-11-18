@@ -6,8 +6,11 @@ import { useSelector } from 'react-redux';
 import './app.css';
 
 const App = () => {
+  // const term = useSelector(
+  //   (state: unknown) => state.toolkit.term
+  // );
   const term = useSelector(
-    (state: unknown) => (state as { term: string }).term
+    (state: unknown) => (state as { toolkit: { term: string } }).toolkit.term
   );
   console.log(term);
 
