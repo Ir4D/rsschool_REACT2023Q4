@@ -1,23 +1,14 @@
 import { render } from '@testing-library/react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import MainPage from './components/pages/main-page';
 import Details from './components/item-details/item-details';
-// import ResultsList from './components/results-list/results-list';
-// import { BrowserRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom';
-// import ApiService from './services/api-service';
-import { Provider } from 'react-redux';
-// import { createStore } from 'redux';
-// import reducer from './reducer';
 import toolkitSlice from './reducer';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
-// const apiService = ApiService();
 
 describe('App', () => {
   it('renders App component', async () => {
-    // const store = createStore(reducer);
-
     const rootReducer = combineReducers({
       toolkit: toolkitSlice,
     });
@@ -30,20 +21,7 @@ describe('App', () => {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/rsschool_REACT2023Q4/"
-              element={
-                <MainPage
-                // updateData={function (): void {
-                //   throw new Error('Function not implemented.');
-                // }}
-                // resultsList={[]}
-                // setResultList={function (): void {
-                //   throw new Error('Function not implemented.');
-                // }}
-                />
-              }
-            >
+            <Route path="/rsschool_REACT2023Q4/" element={<MainPage />}>
               <Route path="details/:id" element={<Details />} />
             </Route>
           </Routes>

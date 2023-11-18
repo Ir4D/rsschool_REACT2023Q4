@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import ApiService from '../../services/api-service';
 import Spinner from '../spinner/spinner';
 import PaginationPanel from '../pagination-panel/pagination-panel';
-// import { Context } from '../pages/main-page';
+import { changeResultList } from '../../reducer';
 
 import './results-list.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeResultList } from '../../reducer';
 
 type Anime = {
   id: number;
@@ -30,9 +29,6 @@ const ResultsList: React.FC<ResultsListProps> = ({
   itemsPerPage,
   setItemsPerPage,
 }) => {
-  // const term = useSelector(
-  //   (state: unknown) => (state as { term: string }).term
-  // );
   const term = useSelector(
     (state: unknown) => (state as { toolkit: { term: string } }).toolkit.term
   );
@@ -42,7 +38,6 @@ const ResultsList: React.FC<ResultsListProps> = ({
       (state as { toolkit: { resultsList: Anime[] } }).toolkit.resultsList
   );
 
-  // const { resultsList, setResultList } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [, setSelectedAnime] = useState<Anime | null>(null);
 
@@ -64,7 +59,6 @@ const ResultsList: React.FC<ResultsListProps> = ({
         newResultsList = await getSearchItems(term, page, itemsPerPage);
       }
 
-      // setResultList(newResultsList);
       dispatch(changeResultList(newResultsList));
     } catch (error) {
       console.error('Error loading data:', error);

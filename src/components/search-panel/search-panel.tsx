@@ -1,13 +1,11 @@
 import { ChangeEvent, useState, useEffect } from 'react';
-// import { Context } from '../pages/main-page';
 import { useDispatch } from 'react-redux';
+import { changeTerm } from '../../reducer';
 
 import './search-panel.css';
-import { changeTerm } from '../../reducer';
 
 const SearchPanel = () => {
   const [inputValue, setInputValue] = useState('');
-  // const { updateData } = useContext(Context);
 
   const saveToLocalStorage = (value: string) => {
     localStorage.setItem('searchInput', value);
@@ -27,10 +25,8 @@ const SearchPanel = () => {
   const dispatch = useDispatch();
 
   const searchNewResults = () => {
-    // dispatch({ type: 'newTerm', payload: inputValue });
     dispatch(changeTerm(inputValue));
     saveToLocalStorage(inputValue);
-    // updateData(inputValue);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
