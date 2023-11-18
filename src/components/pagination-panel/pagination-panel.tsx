@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeItemsPerPage } from '../../reducer';
 
 import './pagination-panel.css';
 
 const PaginationPanel = (props: {
   page: number;
   updatePage: (value: number) => void;
-  itemsPerPage: number;
-  setItemsPerPage: (value: number) => void;
 }) => {
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(true);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -19,10 +19,17 @@ const PaginationPanel = (props: {
     props.updatePage(props.page + 1);
   };
 
+  const itemsPerPage = useSelector(
+    (state: unknown) =>
+      (state as { toolkit: { itemsPerPage: number } }).toolkit.itemsPerPage
+  );
+
+  const dispatch = useDispatch();
+
   const handleItemsPerPageChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    props.setItemsPerPage(parseInt(e.target.value));
+    dispatch(changeItemsPerPage(parseInt(e.target.value)));
     props.updatePage(1);
   };
 
@@ -54,9 +61,10 @@ const PaginationPanel = (props: {
       </div>
       <div className="items-per-page">
         <span>Items per page: </span>
-        <select value={props.itemsPerPage} onChange={handleItemsPerPageChange}>
+        <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
           <option value="12">12</option>
           <option value="6">6</option>
+          <option value="3">3</option>
         </select>
       </div>
     </>

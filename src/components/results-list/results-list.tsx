@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ApiService from '../../services/api-service';
 import Spinner from '../spinner/spinner';
 import PaginationPanel from '../pagination-panel/pagination-panel';
-import { changeResultList } from '../../reducer';
+import { changeResultList, changeItemsOnPage } from '../../reducer';
 
 import './results-list.css';
 
@@ -19,16 +19,9 @@ type Anime = {
 type ResultsListProps = {
   page: number;
   setPage: (page: number) => void;
-  itemsPerPage: number;
-  setItemsPerPage: (value: number) => void;
 };
 
-const ResultsList: React.FC<ResultsListProps> = ({
-  page,
-  setPage,
-  itemsPerPage,
-  setItemsPerPage,
-}) => {
+const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
   const term = useSelector(
     (state: unknown) => (state as { toolkit: { term: string } }).toolkit.term
   );
@@ -36,6 +29,11 @@ const ResultsList: React.FC<ResultsListProps> = ({
   const resultsList = useSelector(
     (state: unknown) =>
       (state as { toolkit: { resultsList: Anime[] } }).toolkit.resultsList
+  );
+
+  const itemsPerPage = useSelector(
+    (state: unknown) =>
+      (state as { toolkit: { itemsPerPage: number } }).toolkit.itemsPerPage
   );
 
   const [loading, setLoading] = useState(true);
@@ -60,6 +58,7 @@ const ResultsList: React.FC<ResultsListProps> = ({
       }
 
       dispatch(changeResultList(newResultsList));
+      dispatch(changeItemsOnPage());
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -105,12 +104,7 @@ const ResultsList: React.FC<ResultsListProps> = ({
       {loading && <Spinner />}
       {!loading && (
         <>
-          <PaginationPanel
-            page={page}
-            updatePage={setPage}
-            itemsPerPage={itemsPerPage}
-            setItemsPerPage={setItemsPerPage}
-          />
+          <PaginationPanel page={page} updatePage={setPage} />
           <div className="results-panel">{renderAnime(resultsList)}</div>
         </>
       )}

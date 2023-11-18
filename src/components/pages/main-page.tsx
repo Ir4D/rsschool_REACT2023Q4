@@ -12,7 +12,6 @@ export type ContextProps = {
 
 const MainPage: React.FC<ContextProps> = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(12);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,12 +32,7 @@ const MainPage: React.FC<ContextProps> = ({ children }) => {
         <h1 className="app-heading">Anime List:</h1>
         <SearchPanel />
         <ErrorBoundary>
-          <ResultsList
-            page={currentPage}
-            setPage={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            setItemsPerPage={setItemsPerPage}
-          />
+          <ResultsList page={currentPage} setPage={setCurrentPage} />
         </ErrorBoundary>
         {children}
       </div>

@@ -5,6 +5,8 @@ const toolkitSlice = createSlice({
   initialState: {
     term: '',
     resultsList: [],
+    itemsOnPage: 12,
+    itemsPerPage: 12,
   },
   reducers: {
     changeTerm(state, action) {
@@ -12,10 +14,20 @@ const toolkitSlice = createSlice({
     },
     changeResultList(state, action) {
       state.resultsList = action.payload;
-      console.log(state.resultsList);
+    },
+    changeItemsOnPage(state) {
+      state.itemsOnPage = state.resultsList.length;
+    },
+    changeItemsPerPage(state, action) {
+      state.itemsPerPage = action.payload;
     },
   },
 });
 
 export default toolkitSlice.reducer;
-export const { changeTerm, changeResultList } = toolkitSlice.actions;
+export const {
+  changeTerm,
+  changeResultList,
+  changeItemsOnPage,
+  changeItemsPerPage,
+} = toolkitSlice.actions;
