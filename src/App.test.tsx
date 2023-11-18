@@ -7,14 +7,24 @@ import Details from './components/item-details/item-details';
 import '@testing-library/jest-dom';
 // import ApiService from './services/api-service';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './reducer';
+// import { createStore } from 'redux';
+// import reducer from './reducer';
+import toolkitSlice from './reducer';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 // const apiService = ApiService();
 
 describe('App', () => {
   it('renders App component', async () => {
-    const store = createStore(reducer);
+    // const store = createStore(reducer);
+
+    const rootReducer = combineReducers({
+      toolkit: toolkitSlice,
+    });
+
+    const store = configureStore({
+      reducer: rootReducer,
+    });
 
     render(
       <Provider store={store}>
