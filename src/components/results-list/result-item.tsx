@@ -1,7 +1,5 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changeItemsOnPage, changeResultList } from '../../reducer';
 
 import './results-list.css';
 
@@ -20,12 +18,9 @@ interface ResultItemProps {
 
 const ResultItem: FC<ResultItemProps> = ({ anime }) => {
   const [, setSelectedAnime] = useState<AnimeItem | null>(null);
-  const dispatch = useDispatch();
 
   const handleAnimeClick = () => {
     setSelectedAnime(anime);
-    dispatch(changeResultList(anime));
-    dispatch(changeItemsOnPage());
   };
 
   return (

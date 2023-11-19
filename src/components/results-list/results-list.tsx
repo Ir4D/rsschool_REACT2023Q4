@@ -6,7 +6,7 @@ import ResultItem from './result-item';
 import Spinner from '../spinner/spinner';
 
 import './results-list.css';
-import { changeLoadingMainPage } from '../../reducer';
+import { changeLoadingMainPage, changeResultList } from '../../reducer';
 import { useEffect } from 'react';
 
 interface AnimeItem {
@@ -43,6 +43,7 @@ const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(changeLoadingMainPage(isFetching));
+    dispatch(changeResultList(dataAll?.data));
   }, [dispatch, dataAll, isFetching]);
 
   return (
