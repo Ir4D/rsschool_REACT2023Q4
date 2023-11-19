@@ -24,8 +24,9 @@ type ResultsListProps = {
 };
 
 const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
-  const term = useSelector(
-    (state: unknown) => (state as { toolkit: { term: string } }).toolkit.term
+  const searchTerm = useSelector(
+    (state: unknown) =>
+      (state as { toolkit: { searchTerm: string } }).toolkit.searchTerm
   );
 
   const itemsPerPage = useSelector(
@@ -34,7 +35,7 @@ const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
   );
 
   const { data: dataAll, isFetching } = useGetDataQuery({
-    term: term,
+    searchTerm: searchTerm,
     limit: itemsPerPage,
     page: page,
   });

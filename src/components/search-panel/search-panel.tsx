@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeTerm } from '../../reducer';
+import { changeSearchTerm } from '../../reducer';
 
 import './search-panel.css';
 
@@ -25,7 +25,7 @@ const SearchPanel = () => {
   const dispatch = useDispatch();
 
   const searchNewResults = () => {
-    dispatch(changeTerm(inputValue));
+    dispatch(changeSearchTerm(inputValue));
     saveToLocalStorage(inputValue);
   };
 

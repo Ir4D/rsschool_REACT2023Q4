@@ -21,7 +21,7 @@ interface ApiDetailsResponse {
 }
 
 type GetDataQueryParams = {
-  term: string;
+  searchTerm: string;
   limit?: number;
   page?: number;
 };
@@ -37,8 +37,8 @@ export const apiService = createApi({
   }),
   endpoints: (build) => ({
     getData: build.query<ApiResponse, GetDataQueryParams>({
-      query: ({ term = '', limit = 12, page = 1 }) =>
-        `/anime?q=${term}&limit=${limit}&page=${page}`,
+      query: ({ searchTerm = '', limit = 12, page = 1 }) =>
+        `/anime?q=${searchTerm}&limit=${limit}&page=${page}`,
     }),
     getDataDetails: build.query<ApiDetailsResponse, GetDataDetailsQueryParams>({
       query: ({ id = 0 }) => `/anime/${id}`,

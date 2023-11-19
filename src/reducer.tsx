@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const toolkitSlice = createSlice({
   name: 'toolkit',
   initialState: {
-    term: '',
+    searchTerm: '',
     resultsList: [],
     itemsOnPage: 12,
     itemsPerPage: 12,
@@ -11,8 +11,8 @@ const toolkitSlice = createSlice({
     loadingDetailsPage: true,
   },
   reducers: {
-    changeTerm(state, action) {
-      state.term = action.payload;
+    changeSearchTerm(state, action) {
+      state.searchTerm = action.payload;
     },
     changeResultList(state, action) {
       state.resultsList = action.payload;
@@ -34,7 +34,7 @@ const toolkitSlice = createSlice({
 
 export default toolkitSlice.reducer;
 export const {
-  changeTerm,
+  changeSearchTerm,
   changeResultList,
   changeItemsOnPage,
   changeItemsPerPage,
