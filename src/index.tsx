@@ -5,25 +5,9 @@ import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import App from './components/app/app';
 import toolkitSlice from './reducer';
-
-import './index.css';
-// import { apiSlice } from './services/apiSlice';
 import { myApi } from './services/apiRequest';
 
-// const rootReducer = combineReducers({
-//   toolkit: toolkitSlice
-// });
-
-// export const store = configureStore({
-//   reducer: rootReducer
-// });
-
-// export const store = configureStore({
-//   reducer: {
-//     [myApi.reducerPath]: myApi.reducer,
-//   },
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myApi.middleware)
-// });
+import './index.css';
 
 const rootReducer = combineReducers({
   toolkit: toolkitSlice,
