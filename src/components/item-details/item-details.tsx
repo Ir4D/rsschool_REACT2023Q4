@@ -1,19 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useGetDataDetailsQuery } from '../../services/api-request';
+import { changeLoadingDetailsPage } from '../../reducer';
 import Spinner from '../spinner/spinner';
 
 const Details = () => {
   const { id } = useParams();
 
-  const { data: dataDetails, isLoading } = useGetDataDetailsQuery({
+  const { data: dataDetails, isFetching } = useGetDataDetailsQuery({
     id: id,
   });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(changeLoadingDetailsPage(isFetching));
+  }, [dispatch, dataDetails, isFetching]);
+
   return (
     <>
-      {isLoading && <Spinner />}
-      {!isLoading && dataDetails && (
+      {isFetching && <Spinner />}
+      {!isFetching && dataDetails && (
         <div
           key={dataDetails.data.mal_id}
           className="item-details"

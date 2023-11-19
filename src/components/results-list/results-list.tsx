@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetDataQuery } from '../../services/api-request';
 import PaginationPanel from '../pagination-panel/pagination-panel';
 import ResultItem from './result-item';
 import Spinner from '../spinner/spinner';
 
 import './results-list.css';
+import { changeLoadingMainPage } from '../../reducer';
+import { useEffect } from 'react';
 
 interface AnimeItem {
   mal_id: number;
@@ -31,16 +33,21 @@ const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
       (state as { toolkit: { itemsPerPage: number } }).toolkit.itemsPerPage
   );
 
-  const { data: dataAll, isLoading } = useGetDataQuery({
+  const { data: dataAll, isFetching } = useGetDataQuery({
     term: term,
     limit: itemsPerPage,
     page: page,
   });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(changeLoadingMainPage(isFetching));
+  }, [dispatch, dataAll, isFetching]);
+
   return (
     <>
-      {isLoading && <Spinner />}
-      {
+      {isFetching && <Spinner />}
+      {!isFetching && (
         <>
           <PaginationPanel page={page} updatePage={setPage} />
           <div className="results-panel">
@@ -55,7 +62,7 @@ const ResultsList: React.FC<ResultsListProps> = ({ page, setPage }) => {
             )}
           </div>
         </>
-      }
+      )}
     </>
   );
 };

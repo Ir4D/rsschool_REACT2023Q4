@@ -7,6 +7,8 @@ const toolkitSlice = createSlice({
     resultsList: [],
     itemsOnPage: 12,
     itemsPerPage: 12,
+    loadingMainPage: true,
+    loadingDetailsPage: true,
   },
   reducers: {
     changeTerm(state, action) {
@@ -21,6 +23,12 @@ const toolkitSlice = createSlice({
     changeItemsPerPage(state, action) {
       state.itemsPerPage = action.payload;
     },
+    changeLoadingMainPage(state, action) {
+      state.loadingMainPage = action.payload;
+    },
+    changeLoadingDetailsPage(state, action) {
+      state.loadingDetailsPage = action.payload;
+    },
   },
 });
 
@@ -30,4 +38,6 @@ export const {
   changeResultList,
   changeItemsOnPage,
   changeItemsPerPage,
+  changeLoadingMainPage,
+  changeLoadingDetailsPage,
 } = toolkitSlice.actions;
