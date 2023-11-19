@@ -30,7 +30,7 @@ type GetDataDetailsQueryParams = {
   id: string | undefined;
 };
 
-export const myApi = createApi({
+export const apiService = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.jikan.moe/v4',
@@ -46,4 +46,4 @@ export const myApi = createApi({
   }),
 });
 
-export const { useGetDataQuery, useGetDataDetailsQuery } = myApi;
+export const { useGetDataQuery, useGetDataDetailsQuery } = apiService;

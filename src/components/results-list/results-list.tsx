@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector } from 'react-redux';
-import Spinner from '../spinner/spinner';
+import { useGetDataQuery } from '../../services/api-request';
 import PaginationPanel from '../pagination-panel/pagination-panel';
-import { useGetDataQuery } from '../../services/apiRequest';
 import ResultItem from './result-item';
+import Spinner from '../spinner/spinner';
 
 import './results-list.css';
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useParams } from 'react-router-dom';
+import { useGetDataDetailsQuery } from '../../services/api-request';
 import Spinner from '../spinner/spinner';
-import { useGetDataDetailsQuery } from '../../services/apiRequest';
 
 const Details = () => {
   const { id } = useParams();

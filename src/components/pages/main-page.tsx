@@ -10,8 +10,6 @@ export type ContextProps = {
   children?: React.ReactNode;
 };
 
-// import { useGetDataQuery } from '../../services/apiRequest';
-
 const MainPage: React.FC<ContextProps> = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -24,13 +22,6 @@ const MainPage: React.FC<ContextProps> = ({ children }) => {
   };
 
   const isMainPage = location.pathname !== '/rsschool_REACT2023Q4/';
-
-  // const {data = [], isLoading} = useGetDataQuery();
-  // const {
-  //   data: anime = [],
-  //   isLoading,
-  // } = useGetDataQuery();
-  // if (isLoading) return <h1>Loading...</h1>
 
   return (
     <div className="app-wrapper">

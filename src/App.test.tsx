@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import '@testing-library/jest-dom';
+import { render } from '@testing-library/react';
 import MainPage from './components/pages/main-page';
 import Details from './components/item-details/item-details';
-import '@testing-library/jest-dom';
 import toolkitSlice from './reducer';
 
 describe('App', () => {
