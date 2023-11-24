@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import Heading from "./Heading";
+import SearchPanel from "./SearchPanel";
 
 type layoutProps = {
   children: ReactNode;
@@ -8,6 +9,7 @@ type layoutProps = {
 const Layout:FC<layoutProps> = ({ children }) => (
   <>
     <Heading />
+    <SearchPanel />
     {children}
   </>
 );
