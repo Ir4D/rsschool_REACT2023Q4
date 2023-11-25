@@ -1,10 +1,12 @@
+import { useState } from 'react';
+import Head from 'next/head'
 import CardsList from '@/components/CardsList';
 import SearchPanel from '@/components/SearchPanel';
-import Head from 'next/head'
-import { useState } from 'react';
 
 const Home = () => {
   const [term, setTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const updateData = (value: string) => {
     setTerm(value);
   };
@@ -16,7 +18,13 @@ const Home = () => {
       </Head>
       <main>
         <SearchPanel updateData={updateData} />
-        <CardsList term={term} />
+        <CardsList
+          term={term}
+          page={currentPage}
+          setPage={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+        />
       </main>
     </>
   );

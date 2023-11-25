@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import CardItem from "./CardItem";
 
 import style from "../styles/CardsList.module.css";
+import Pagination from "./PaginationPanel";
 
 interface AnimeItem {
   mal_id: number;
@@ -14,20 +15,24 @@ interface AnimeItem {
   image_url: string;
 }
 
-const CardsList = (props: { term: string; }
-) => {
+const CardsList = (props: { 
+  term: string;
+  page: number;
+  setPage: (page: number) => void;
+  itemsPerPage: number;
+  setItemsPerPage: (value: number) => void;
+}) => {
   const [cardsList, setCardsList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const limit = 12;
-  const page = 1;
-
   const loadPageData = async (
     term: string,
+    page: number,
+    itemsPerPage: number
   ) => {
     try {
       const fetchData = async  () => {
-        const responce = await fetch(`https://api.jikan.moe/v4/anime?q=${term}&limit=${limit}&page=${page}`);
+        const responce = await fetch(`https://api.jikan.moe/v4/anime?q=${term}&limit=${itemsPerPage}&page=${page}`);
         const data = await responce.json();
         setCardsList(data.data);
       }
@@ -40,14 +45,8 @@ const CardsList = (props: { term: string; }
 
   useEffect(() => {
     setLoading(true);
-    // const fetchData = async  () => {
-    //   const responce = await fetch(`https://api.jikan.moe/v4/anime?q=${searchText}&limit=${limit}&page=${page}`);
-    //   const data = await responce.json();
-    //   setCardsList(data.data);
-    // }
-    // fetchData();
-    loadPageData(props.term);
-  }, [props.term]);
+    loadPageData(props.term, props.page, props.itemsPerPage);
+  }, [props.term, props.page, props.itemsPerPage]);
 
   if (loading) {
     return <Spinner />;
@@ -55,15 +54,17 @@ const CardsList = (props: { term: string; }
 
   return (
     <>
-      <h2>Cards</h2>
+      <Pagination
+        page={props.page}
+        updatePage={props.setPage}
+        itemsPerPage={props.itemsPerPage}
+        setItemsPerPage={props.setItemsPerPage}
+      />
       <div>  
         {cardsList && cardsList.length !== 0 ? (
           <ul className={style.animeList}>
             {cardsList && cardsList.map((anime: AnimeItem) => (
               <CardItem key={anime.mal_id} anime={anime} />
-              // <li key={anime.mal_id}>
-              //   <Link href={`/details/${anime.mal_id}`}>{anime.title}</Link>
-              // </li>
             ))}
         </ul>
         ) : (
