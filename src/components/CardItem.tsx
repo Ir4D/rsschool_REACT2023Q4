@@ -25,9 +25,9 @@ const CardItem: FC<ResultItemProps> = ({ anime }) => {
   };
 
   return (
-    <div key={anime.mal_id}>
+    // <div key={anime.mal_id}>
       <Link
-        href={`/${anime.mal_id}`}
+        href={`details/${anime.mal_id}`}
         key={anime.mal_id}
       >
         <li className={style.animeItem} onClick={() => handleAnimeClick()}>
@@ -44,7 +44,7 @@ const CardItem: FC<ResultItemProps> = ({ anime }) => {
           </div>
         </li>
       </Link>
-    </div>
+    // </div>
   );
 };
 
