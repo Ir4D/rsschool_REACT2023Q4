@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ReactNode, createContext, useContext, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
 import { cardsType } from "@/types";
@@ -28,7 +28,6 @@ const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
     }
   };
 
-  // const isMainPage = !router.pathname.includes('/details');
   const isMainPage = router.pathname.indexOf('/details') === -1;
 
   return (
@@ -36,11 +35,7 @@ const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
       <Head>
         <title>Anime List</title>
       </Head>
-      <main 
-        id="main" 
-        // className={`${isMainPage ? 'active' : 'unactive'}`}
-        // onClick={goToMainPage}
-        >
+      <main id="main" >
         <div className={style.appWrapper}>
           <div
             id="appMain" 

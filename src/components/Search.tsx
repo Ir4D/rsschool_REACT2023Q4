@@ -10,7 +10,7 @@ const Search = () => {
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(true);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const { term, setTerm, itemsPerPage, setItemsPerPage, currentPage, setCurrentPage, updateData, updatePage } = useMyContext();
+  const { setTerm, itemsPerPage, setItemsPerPage, currentPage, updateData, updatePage } = useMyContext();
 
   const router = useRouter();
 
@@ -92,7 +92,6 @@ const Search = () => {
           type="button"
           className={`${style.btn} ${style.prevBtn}`}
           onClick={showPrevPage}
-          // disabled={isPrevButtonDisabled}
           disabled={isPrevButtonDisabled || isDetailsPage}
         >
           Prev
@@ -102,7 +101,6 @@ const Search = () => {
           type="button"
           className={`${style.btn} ${style.nextBtn}`}
           onClick={showNextPage}
-          // disabled={isNextButtonDisabled}
           disabled={isNextButtonDisabled || isDetailsPage}
         >
           Next

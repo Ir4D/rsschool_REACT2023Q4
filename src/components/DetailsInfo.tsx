@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FC, useEffect, useRef } from "react";
+import { FC } from "react";
 import { cardsType } from "@/types";
 import { useMyContext } from "./MyContext";
 
