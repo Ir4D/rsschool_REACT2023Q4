@@ -1,20 +1,11 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-
-import style from "../styles/PaginationPanel.module.css";
-import styles from '../styles/SearchPanel.module.css';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-// import { Context } from '@/pages';
 import { useMyContext } from './MyContext';
 
-const Search = (
-  // props: {
-  // page: number;
-  // updatePage: (value: number) => void;
-  // itemsPerPage: number;
-  // setItemsPerPage: (value: number) => void;
-  // updateData: (arg0: string) => void;
-// }
-) => {
+import styles from '../styles/SearchPanel.module.css';
+import style from "../styles/PaginationPanel.module.css";
+
+const Search = () => {
   const [inputValue, setInputValue] = useState('');
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(true);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -41,10 +32,8 @@ const Search = (
   const searchNewResults = () => {
     saveToLocalStorage(inputValue);
     router.push(`?search=${inputValue}&page=1&itemsPerPage=${itemsPerPage}`);
-    // props.updateData(inputValue);
     updateData(inputValue);
     setTerm(inputValue);
-    console.log(term);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +42,12 @@ const Search = (
 
   const showPrevPage = () => {
     const newPage = currentPage - 1;
-    // props.updatePage(newPage);
     updatePage(newPage);
     router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${itemsPerPage}`);
   };
 
   const showNextPage = () => {
     const newPage = currentPage + 1;
-    // props.updatePage(newPage);
     updatePage(newPage);
     router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${itemsPerPage}`);
   };
@@ -70,7 +57,6 @@ const Search = (
   ) => {
     const newItemsPerPage = parseInt(e.target.value);
     setItemsPerPage(newItemsPerPage);
-    // props.updatePage(1);
     updatePage(1);
     router.push(`?search=${inputValue}&page=1&itemsPerPage=${newItemsPerPage}`);
   };
@@ -79,6 +65,8 @@ const Search = (
     setPrevButtonDisabled(currentPage === 1);
     setNextButtonDisabled(currentPage === 2128);
   }, [currentPage]);
+
+  const isDetailsPage = router.pathname.includes('/details');
 
   return (
     <>
@@ -90,11 +78,11 @@ const Search = (
           value={inputValue}
           onChange={handleInputChange}
         />
-
         <button 
           type="submit" 
-          className={styles.searchBtn} 
+          className={styles.searchBtn}
           onClick={searchNewResults}
+          disabled={isDetailsPage}
         >
           Search
         </button>
@@ -104,7 +92,8 @@ const Search = (
           type="button"
           className={`${style.btn} ${style.prevBtn}`}
           onClick={showPrevPage}
-          disabled={isPrevButtonDisabled}
+          // disabled={isPrevButtonDisabled}
+          disabled={isPrevButtonDisabled || isDetailsPage}
         >
           Prev
         </button>
@@ -113,14 +102,19 @@ const Search = (
           type="button"
           className={`${style.btn} ${style.nextBtn}`}
           onClick={showNextPage}
-          disabled={isNextButtonDisabled}
+          // disabled={isNextButtonDisabled}
+          disabled={isNextButtonDisabled || isDetailsPage}
         >
           Next
         </button>
       </div>
       <div className={style.itemsPerPage}>
         <span>Items per page: </span>
-        <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+        <select 
+          value={itemsPerPage} 
+          onChange={handleItemsPerPageChange}
+          disabled={isDetailsPage}
+        >
           <option value="12">12</option>
           <option value="6">6</option>
         </select>

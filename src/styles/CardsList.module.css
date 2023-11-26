@@ -48,8 +48,12 @@
 }
 
 .itemDetails {
-  width: 500px;
+  width: 300px;
   display: flex;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
   flex-direction: row;
   margin: 15px;
   justify-content: center;
@@ -74,3 +78,13 @@
   cursor: pointer;
   box-shadow: 0 0 12px 4px #e3a2ee80;
 }
+
+.appWrapper {
+  display: flex;
+  position: relative;
+}
+
+.appHeading {
+  font-size: 32px;
+}
+

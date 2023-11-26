@@ -1,19 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FC, useContext } from "react";
-import style from "../styles/CardsList.module.css";
+import { FC, useEffect, useRef } from "react";
 import { cardsType } from "@/types";
-// import { Context } from "@/pages";
 import { useMyContext } from "./MyContext";
 
+import style from "../styles/CardsList.module.css";
 
 type detailsInfoProps = {
   cardDetails: cardsType,
 };
 
 const DetailsInfo:FC<detailsInfoProps> = ({ cardDetails }) => {  
-  const { term, setTerm, itemsPerPage, setItemsPerPage, currentPage, setCurrentPage, updateData, updatePage } = useMyContext();
-  console.log(term);
+  const { term, itemsPerPage, currentPage } = useMyContext();
 
   if (!cardDetails) {
     return <h3>No details found</h3>
@@ -39,7 +37,6 @@ const DetailsInfo:FC<detailsInfoProps> = ({ cardDetails }) => {
             <p className={`${style.animeInfo} ${style.animeRating}`}>Rating: {rating}</p>
           </div>
           <Link href={`/?search=${term}&itemsPerPage=${itemsPerPage}&page=${currentPage}`}>
-          {/* <Link href={`/`}> */}
             <button className={style.itemDetailsBtn}>Close</button>
           </Link>
         </div>
