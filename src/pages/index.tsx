@@ -3,12 +3,11 @@ import { FC, useEffect, useState } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
-import SearchPanel from '@/components/SearchPanel';
 import { cardsType } from "@/types";
+import Spinner from '@/components/Spinner';
+import Search from '@/components/Search';
 
 import style from "../styles/CardsList.module.css";
-import PaginationPanel from '@/components/PaginationPanel';
-import Search from '@/components/Search';
 
 type cardsTypesProps = {
   cards: cardsType[]
@@ -18,10 +17,18 @@ const Home:FC<cardsTypesProps> = ({ cards }) => {
   const [term, setTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [loading, setLoading] = useState(false);
   const updateData = (value: string) => {
-    console.log('Update Data:', value);
     setTerm(value);
   };
+
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [term, currentPage, itemsPerPage]);
 
   return (
     <>
@@ -29,42 +36,41 @@ const Home:FC<cardsTypesProps> = ({ cards }) => {
         <title>Anime List</title>
       </Head>
       <main>
-        <Search
-          page={currentPage} 
-          updatePage={setCurrentPage} 
-          itemsPerPage={itemsPerPage} 
-          setItemsPerPage={setItemsPerPage}
-          updateData={updateData}
-        />
-        {/* <SearchPanel updateData={updateData} /> */}
         <>
-          {/* <PaginationPanel page={currentPage} updatePage={setCurrentPage} itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}  /> */}
-          <div>  
-            {cards && cards.length !== 0 ? (
-              <ul className={style.animeList}>
-                {cards && cards.map((anime: cardsType) => (
-                  <Link
-                    href={`details/${anime.mal_id}`}
-                    key={anime.mal_id}
-                  >
-                    <li key={anime.mal_id} className={style.animeItem}>
-                      <img
-                        src={anime.images ? anime.images.jpg.image_url : ''}
-                        alt="Anime"
-                        className={style.animeImg}
-                        />
-                      <div className={style.animeDescription}>
-                        <h3 className={style.animeTitle}>{anime.title}</h3>
-                        <p className={style.animeYear}>
-                          Year: {anime.year ? anime.year : 'Unknown'}
-                        </p>
-                      </div>
-                    </li>
-                  </Link>
-                ))}
-            </ul>
+          <Search
+            page={currentPage} 
+            updatePage={setCurrentPage} 
+            itemsPerPage={itemsPerPage} 
+            setItemsPerPage={setItemsPerPage}
+            updateData={updateData}
+          />
+          <div>
+            {loading ? (
+              <Spinner />
             ) : (
-            <p>No anime were found</p>
+              <ul className={style.animeList}>
+                {cards && cards.length !== 0 ? (
+                  cards.map((anime: cardsType) => (
+                    <Link href={`details/${anime.mal_id}`} key={anime.mal_id}>
+                      <li key={anime.mal_id} className={style.animeItem}>
+                        <img
+                          src={anime.images ? anime.images.jpg.image_url : ''}
+                          alt="Anime"
+                          className={style.animeImg}
+                        />
+                        <div className={style.animeDescription}>
+                          <h3 className={style.animeTitle}>{anime.title}</h3>
+                          <p className={style.animeYear}>
+                            Year: {anime.year ? anime.year : 'Unknown'}
+                          </p>
+                        </div>
+                      </li>
+                    </Link>
+                  ))
+                ) : (
+                  <p>No anime were found</p>
+                )}
+              </ul>
             )}
           </div>
         </>
