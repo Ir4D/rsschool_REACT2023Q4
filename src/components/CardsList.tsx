@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import CardItem from "./CardItem";
+import Pagination from "./PaginationPanel";
+import { cardsType } from "@/types";
 
 import style from "../styles/CardsList.module.css";
-import Pagination from "./PaginationPanel";
-
-interface AnimeItem {
-  mal_id: number;
-  title: string;
-  year: number;
-  type: string;
-  images?: { jpg: { image_url: string } };
-  image_url: string;
-}
 
 const CardsList = (props: { 
   term: string;
@@ -62,7 +54,7 @@ const CardsList = (props: {
       <div>  
         {cardsList && cardsList.length !== 0 ? (
           <ul className={style.animeList}>
-            {cardsList && cardsList.map((anime: AnimeItem) => (
+            {cardsList && cardsList.map((anime: cardsType) => (
               <CardItem key={anime.mal_id} anime={anime} />
             ))}
         </ul>

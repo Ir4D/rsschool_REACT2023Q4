@@ -1,21 +1,10 @@
 import { FC } from "react";
 import { GetServerSideProps } from "next";
 import DetailsInfo from "@/components/DetailsInfo";
-
-type cardDetailsType = {
-  mal_id: number;
-  title: string;
-  title_japanese: string;
-  year: number;
-  type: string;
-  score: string;
-  rating: string;
-  images: { jpg: { image_url: string } };
-  image_url: string;
-}
+import { cardsType } from "@/types";
 
 type cardDetailsTypesProps = {
-  cardDetails: cardDetailsType,
+  cardDetails: cardsType,
 }
 
 export const getServerSideProps: GetServerSideProps<cardDetailsTypesProps> = async (context) => {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import style from "../styles/PaginationPanel.module.css";
+import { useRouter } from 'next/router';
 
 const PaginationPanel = (props: {
   page: number;
@@ -11,19 +12,27 @@ const PaginationPanel = (props: {
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(true);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
+  const router = useRouter();
+
   const showPrevPage = () => {
-    props.updatePage(props.page - 1);
+    const newPage = props.page - 1;
+    props.updatePage(newPage);
+    router.push(`?page=${newPage}`);
   };
 
   const showNextPage = () => {
-    props.updatePage(props.page + 1);
+    const newPage = props.page + 1;
+    props.updatePage(newPage);
+    router.push(`?page=${newPage}`);
   };
 
   const handleItemsPerPageChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    props.setItemsPerPage(parseInt(e.target.value));
+    const newItemsPerPage = parseInt(e.target.value);
+    props.setItemsPerPage(newItemsPerPage);
     props.updatePage(1);
+    router.push(`?page=1&itemsPerPage=${newItemsPerPage}`);
   };
 
   useEffect(() => {

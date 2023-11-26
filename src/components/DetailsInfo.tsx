@@ -2,21 +2,10 @@
 import Link from "next/link";
 import { FC } from "react";
 import style from "../styles/CardsList.module.css";
-
-type cardDetailsType = {
-  mal_id: number;
-  title: string;
-  title_japanese: string;
-  year: number;
-  type: string;
-  score: string;
-  rating: string;
-  images: { jpg: { image_url: string } };
-  image_url: string;
-}
+import { cardsType } from "@/types";
 
 type detailsInfoProps = {
-  cardDetails: cardDetailsType,
+  cardDetails: cardsType,
 };
 
 const DetailsInfo:FC<detailsInfoProps> = ({ cardDetails }) => {  

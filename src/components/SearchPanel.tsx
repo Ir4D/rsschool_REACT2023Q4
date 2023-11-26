@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import styles from '../styles/SearchPanel.module.css';
+import { useRouter } from 'next/navigation';
 
 const SearchPanel = (props: { updateData: (arg0: string) => void }) => {
   const [inputValue, setInputValue] = useState('');
+  const router = useRouter();
 
   const saveToLocalStorage = (value: string) => {
     localStorage.setItem('searchInput', value);
@@ -21,6 +23,7 @@ const SearchPanel = (props: { updateData: (arg0: string) => void }) => {
 
   const searchNewResults = () => {
     saveToLocalStorage(inputValue);
+    router.push(`?search=${inputValue}`);
     props.updateData(inputValue);
   };
 
