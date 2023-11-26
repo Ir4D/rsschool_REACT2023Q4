@@ -1,0 +1,40 @@
+.appWrapper {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.appHeading {
+  font-size: 32px;
+  margin: 0 auto;
+}
+
+.appMain {
+  width: 100%;
+}
+
+.itemDetails {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  border-radius: 10px;
+  background-color: #a0a0a0bf;
+  box-shadow: 0 0 12px 4px #f2c5fac2;
+  z-index: 200;
+}
+
+.itemDetailsBtn {
+  cursor: pointer;
+}
+
+.itemDetailsBtn:hover {
+  cursor: pointer;
+  box-shadow: 0 0 12px 4px #e3a2ee80;
+}

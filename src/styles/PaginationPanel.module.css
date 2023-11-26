@@ -1,0 +1,12 @@
+.paginationPanel {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.currentPage {
+  width: 30px;
+  height: auto;
+  background-color: #6b6b6b;
+  border-radius: 2px;
+}
