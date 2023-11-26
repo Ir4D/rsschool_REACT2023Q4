@@ -8,6 +8,7 @@ import { cardsType } from "@/types";
 
 import style from "../styles/CardsList.module.css";
 import PaginationPanel from '@/components/PaginationPanel';
+import Search from '@/components/Search';
 
 type cardsTypesProps = {
   cards: cardsType[]
@@ -28,9 +29,16 @@ const Home:FC<cardsTypesProps> = ({ cards }) => {
         <title>Anime List</title>
       </Head>
       <main>
-        <SearchPanel updateData={updateData} />
+        <Search
+          page={currentPage} 
+          updatePage={setCurrentPage} 
+          itemsPerPage={itemsPerPage} 
+          setItemsPerPage={setItemsPerPage}
+          updateData={updateData}
+        />
+        {/* <SearchPanel updateData={updateData} /> */}
         <>
-          <PaginationPanel page={currentPage} updatePage={setCurrentPage} itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}  />
+          {/* <PaginationPanel page={currentPage} updatePage={setCurrentPage} itemsPerPage={itemsPerPage} setItemsPerPage={setItemsPerPage}  /> */}
           <div>  
             {cards && cards.length !== 0 ? (
               <ul className={style.animeList}>
