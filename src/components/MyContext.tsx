@@ -13,6 +13,8 @@ type MyContextType = {
   setCurrentPage: (value: number) => void;
   updateData: (value: string) => void;
   updatePage: (value: number) => void;
+  loading: boolean;
+  setLoading: (value: boolean) => void;
 };
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ export const MyContextProvider: React.FC<MyContextProps> = ({ children }) => {
   const [term, setTerm] = useState('');
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const updateData = (value: string) => {
     setTerm(value);
@@ -39,6 +42,8 @@ export const MyContextProvider: React.FC<MyContextProps> = ({ children }) => {
     setCurrentPage,
     updateData,
     updatePage,
+    loading,
+    setLoading,
   };
 
   return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;

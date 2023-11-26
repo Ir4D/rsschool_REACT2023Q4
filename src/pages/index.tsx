@@ -7,7 +7,6 @@ type cardsTypesProps = {
 }
 
 const Home = ({cards}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-
   return (
     <Layout cards={cards}/>
   );

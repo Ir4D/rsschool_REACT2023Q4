@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { cardsType } from "@/types";
 import Spinner from '@/components/Spinner';
 import Search from '@/components/Search';
 import { useMyContext } from './MyContext';
 
 import style from "../styles/CardsList.module.css";
-import { useRouter } from 'next/router';
 
 interface LayoutProps {
   cards?: cardsType[],
@@ -16,8 +17,7 @@ interface LayoutProps {
 }
 
 const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
-  const [loading, setLoading] = useState(false);
-  const { term, itemsPerPage, currentPage } = useMyContext();
+  const { loading, setLoading, term, itemsPerPage, currentPage } = useMyContext();
 
   const router = useRouter();
 
@@ -27,6 +27,24 @@ const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
       return null;
     }
   };
+
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setLoading(true);
+    };
+
+    const handleRouteChangeComplete = () => {
+      setLoading(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+  }, [router.events]);
 
   const isMainPage = router.pathname.indexOf('/details') === -1;
 
@@ -43,9 +61,8 @@ const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
             onClick={goToMainPage}>
             <Search />
             <div>
-              {loading ? (
-                <Spinner />
-              ) : (
+              {loading && <Spinner />}
+              {!loading && (
                 <ul className={style.animeList}>
                   {cards && cards.length !== 0 ? (
                     cards.map((anime: cardsType) => (
