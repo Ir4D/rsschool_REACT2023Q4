@@ -14,7 +14,6 @@ type cardDetailsTypesProps = {
 export const getServerSideProps: GetServerSideProps<cardDetailsTypesProps> = async (context) => {
   const id = context.params?.id;
   const { term, itemsPerPage, page } = context.query;
-  console.log(itemsPerPage);
 
   const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
   const data = await response.json();
@@ -37,8 +36,6 @@ export const getServerSideProps: GetServerSideProps<cardDetailsTypesProps> = asy
 };
 
 const Details:FC<cardDetailsTypesProps> = ({ cardDetails, cards}) => {
-  console.log(cardDetails);
-  console.log(cards);
   return (
     <div className={style.detalsPage}>
       <Layout cards={cards} />

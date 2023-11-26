@@ -1,19 +1,25 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import style from "../styles/PaginationPanel.module.css";
 import styles from '../styles/SearchPanel.module.css';
 import { useRouter } from 'next/router';
+// import { Context } from '@/pages';
+import { useMyContext } from './MyContext';
 
-const Search = (props: {
-  page: number;
-  updatePage: (value: number) => void;
-  itemsPerPage: number;
-  setItemsPerPage: (value: number) => void;
-  updateData: (arg0: string) => void;
-}) => {
+const Search = (
+  // props: {
+  // page: number;
+  // updatePage: (value: number) => void;
+  // itemsPerPage: number;
+  // setItemsPerPage: (value: number) => void;
+  // updateData: (arg0: string) => void;
+// }
+) => {
   const [inputValue, setInputValue] = useState('');
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(true);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
+
+  const { term, setTerm, itemsPerPage, setItemsPerPage, currentPage, setCurrentPage, updateData, updatePage } = useMyContext();
 
   const router = useRouter();
 
@@ -34,8 +40,11 @@ const Search = (props: {
 
   const searchNewResults = () => {
     saveToLocalStorage(inputValue);
-    router.push(`?search=${inputValue}&page=1&itemsPerPage=${props.itemsPerPage}`);
-    props.updateData(inputValue);
+    router.push(`?search=${inputValue}&page=1&itemsPerPage=${itemsPerPage}`);
+    // props.updateData(inputValue);
+    updateData(inputValue);
+    setTerm(inputValue);
+    console.log(term);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,30 +52,33 @@ const Search = (props: {
   };
 
   const showPrevPage = () => {
-    const newPage = props.page - 1;
-    props.updatePage(newPage);
-    router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${props.itemsPerPage}`);
+    const newPage = currentPage - 1;
+    // props.updatePage(newPage);
+    updatePage(newPage);
+    router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${itemsPerPage}`);
   };
 
   const showNextPage = () => {
-    const newPage = props.page + 1;
-    props.updatePage(newPage);
-    router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${props.itemsPerPage}`);
+    const newPage = currentPage + 1;
+    // props.updatePage(newPage);
+    updatePage(newPage);
+    router.push(`?search=${inputValue}&page=${newPage}&itemsPerPage=${itemsPerPage}`);
   };
 
   const handleItemsPerPageChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newItemsPerPage = parseInt(e.target.value);
-    props.setItemsPerPage(newItemsPerPage);
-    props.updatePage(1);
+    setItemsPerPage(newItemsPerPage);
+    // props.updatePage(1);
+    updatePage(1);
     router.push(`?search=${inputValue}&page=1&itemsPerPage=${newItemsPerPage}`);
   };
 
   useEffect(() => {
-    setPrevButtonDisabled(props.page === 1);
-    setNextButtonDisabled(props.page === 2128);
-  }, [props.page]);
+    setPrevButtonDisabled(currentPage === 1);
+    setNextButtonDisabled(currentPage === 2128);
+  }, [currentPage]);
 
   return (
     <>
@@ -96,7 +108,7 @@ const Search = (props: {
         >
           Prev
         </button>
-        <div className={style.currentPage}>{props.page}</div>
+        <div className={style.currentPage}>{currentPage}</div>
         <button
           type="button"
           className={`${style.btn} ${style.nextBtn}`}
@@ -108,7 +120,7 @@ const Search = (props: {
       </div>
       <div className={style.itemsPerPage}>
         <span>Items per page: </span>
-        <select value={props.itemsPerPage} onChange={handleItemsPerPageChange}>
+        <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
           <option value="12">12</option>
           <option value="6">6</option>
         </select>

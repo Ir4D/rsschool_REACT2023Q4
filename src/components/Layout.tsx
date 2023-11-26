@@ -1,56 +1,59 @@
-// import { FC, ReactNode, useState } from "react";
-// import Heading from "./Heading";
-
-// type layoutProps = {
-//   children: ReactNode;
-// };
-
-// const Layout:FC<layoutProps> = ({ children }) => {
-//   return (
-//     <>
-//       <Heading />
-//       {children}
-//     </>
-//   );
-// };
-
-// export default Layout;
-
-
 /* eslint-disable @next/next/no-img-element */
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode, createContext, useContext, useState } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
-import { GetServerSideProps } from 'next';
 import { cardsType } from "@/types";
 import Spinner from '@/components/Spinner';
 import Search from '@/components/Search';
 
 import style from "../styles/CardsList.module.css";
+// import { Context } from '@/pages';
+import { useMyContext } from './MyContext';
 
 interface LayoutProps {
   cards?: cardsType[],
   children?: ReactNode,
 }
 
+// export type ContextProps = {
+//   term: string;
+//   setTerm: (value: string) => void;
+//   updateData: (value: string) => void;
+//   updatePage: (value: number) => void;
+//   itemsPerPage: number;
+//   currentPage: number;
+//   resultsList: never[];
+//   setResultList: (value: []) => void;
+//   children?: React.ReactNode;
+// };
+
+// export const Context = createContext<ContextProps>({
+//   term: '',
+//   setTerm: () => {},
+//   updateData: () => {},
+//   updatePage: () => {},
+//   itemsPerPage: 12,
+//   currentPage: 1,
+//   resultsList: [],
+//   setResultList: () => {},
+// });
+
 const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
-  const [term, setTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  // const [term, setTerm] = useState('');
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage, setItemsPerPage] = useState(12);
   const [loading, setLoading] = useState(false);
-  const updateData = (value: string) => {
-    setTerm(value);
-  };
+  const [resultsList, setResultList] = useState([]);
 
-  console.log(cards);
+  const { term, setTerm, itemsPerPage, setItemsPerPage, currentPage, setCurrentPage, updateData, updatePage } = useMyContext();
 
-  // useEffect(() => {
-  //   setLoading(true);
+  // const updateData = (value: string) => {
+  //   setTerm(value);
+  // };
 
-  //   // setTimeout(() => {
-  //   //   setLoading(false);
-  //   // }, 2000);
-  // }, [term, currentPage, itemsPerPage]);
+  // const updatePage = (value: number) => {
+  //   setCurrentPage(value);
+  // };
 
   return (
     <>
@@ -60,11 +63,11 @@ const Layout:FC<LayoutProps> = ({ children, cards }: LayoutProps ) => {
       <main>
         <>
           <Search
-            page={currentPage} 
-            updatePage={setCurrentPage} 
-            itemsPerPage={itemsPerPage} 
-            setItemsPerPage={setItemsPerPage}
-            updateData={updateData}
+            // page={currentPage} 
+            // updatePage={setCurrentPage} 
+            // itemsPerPage={itemsPerPage} 
+            // setItemsPerPage={setItemsPerPage}
+            // updateData={updateData}
           />
           <div>
             {loading ? (
