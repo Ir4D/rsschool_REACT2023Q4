@@ -14,24 +14,6 @@
     "test:coverage": "jest --coverage",
     "pre-push": "npm run test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
-  },
-  "lint-staged": {
-    "*.tsx": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.html": [
-      "prettier --write"
-    ],
-    "*.css": [
-      "prettier --write"
-    ]
-  },
   "dependencies": {
     "react": "^18",
     "react-dom": "^18",
