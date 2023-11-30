@@ -10,7 +10,8 @@
     "fix": "prettier ./src --write",
     "preview": "vite preview",
     "format:fix": "npx prettier --write .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -50,7 +51,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "typescript": "^5.2.2",
