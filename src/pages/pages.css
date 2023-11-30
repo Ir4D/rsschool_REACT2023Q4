@@ -1,0 +1,12 @@
+.main-forms {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.main-formUncontrComp, 
+.main-formReactHooks {
+  padding: 10px 25px;
+  border-radius: 8px;
+  background-color: #263e43;
+}

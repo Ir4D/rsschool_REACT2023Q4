@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { updateAge, updateCountry, updateEmail, updateGender, updateName, updatePsw } from "../reducer";
 
 const FormUncontrComp = () => {
   const inputNameRef = useRef<HTMLInputElement>(null);
@@ -10,7 +12,9 @@ const FormUncontrComp = () => {
   const inputTerms = useRef<HTMLInputElement>(null);
   const inputCountry = useRef<HTMLSelectElement>(null);
 
-  function handleSubmit(event: { preventDefault: () => void; }) {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     console.log(`Name: ${inputNameRef.current?.value}`);
     console.log(`Age: ${inputAgeRef.current?.value}`);
@@ -20,14 +24,21 @@ const FormUncontrComp = () => {
     console.log(`Gender: ${inputGender.current?.value}`);
     console.log(`Terms: ${inputTerms.current?.value}`);
     console.log(`Country: ${inputCountry.current?.value}`);
+
+    dispatch(updateName(inputNameRef.current?.value));
+    dispatch(updateAge(inputAgeRef.current?.value));
+    dispatch(updateEmail(inputEmailRef.current?.value));
+    dispatch(updatePsw(inputPswRef.current?.value));
+    dispatch(updateGender(inputGender.current?.value));
+    dispatch(updateCountry(inputCountry.current?.value));
   }
 
   return (
     <>
-      <h1>Uncontrolled components Form</h1>
-      <div className="uncontrForm">
+      <h1 className="form-title uncontrForm-title">Uncontrolled components Form</h1>
+      <div className="form uncontrForm-form">
         <form onSubmit={handleSubmit}>
-          <div className="uncontrName">
+          <div className="form-name uncontrForm-name">
             <label>Name:</label>
             <input 
               type="text"
@@ -35,7 +46,7 @@ const FormUncontrComp = () => {
               ref={inputNameRef}
             />
           </div>
-          <div className="uncontrAge">
+          <div className="form-age uncontrForm-age">
             <label>Age:</label>
             <input 
               type="number"
@@ -43,7 +54,7 @@ const FormUncontrComp = () => {
               ref={inputAgeRef}
             />
           </div>
-          <div className="uncontrEmail">
+          <div className="form-email uncontrForm-email">
             <label>Email:</label>
             <input 
               type="email"
@@ -51,7 +62,7 @@ const FormUncontrComp = () => {
               ref={inputEmailRef}
             />
           </div>
-          <div className="uncontrPsw">
+          <div className="form-psw uncontrForm-psw">
             <label>Password:</label>
             <input 
               type="password"
@@ -59,7 +70,7 @@ const FormUncontrComp = () => {
               ref={inputPswRef}
             />
           </div>
-          <div className="uncontrPswRep">
+          <div className="form-pswRep uncontrForm-pswRep">
             <label>Password repeat:</label>
             <input 
               type="password"
@@ -67,7 +78,7 @@ const FormUncontrComp = () => {
               ref={inputPswRepRef}
             />
           </div>
-          <div className="uncontrGender">
+          <div className="form-gender uncontrForm-gender">
             <span>Gender:</span>
             <input 
               type="radio" 
@@ -86,7 +97,7 @@ const FormUncontrComp = () => {
             />
             <label htmlFor="genderFemale">Female</label>
           </div>
-          <div className="uncontrTerms">
+          <div className="form-terms uncontrForm-terms">
             <input 
               type="checkbox"
               name="terms"
@@ -94,7 +105,7 @@ const FormUncontrComp = () => {
               />
             <label>Terms and Conditions</label>
           </div>
-          <div className="uncontrImg">
+          <div className="form-img uncontrForm-img">
           <label>Picture:</label>
             <input
               type="file"
@@ -102,7 +113,7 @@ const FormUncontrComp = () => {
               accept="image/png, image/jpeg"
             />
           </div>
-          <div className="uncontrCountry">
+          <div className="form-country uncontrForm-country">
             <label htmlFor="country">Country:</label>
             <select
               id="country"
@@ -115,7 +126,7 @@ const FormUncontrComp = () => {
             </select>
           </div>
           <button 
-            className="uncontrBtn"
+            className="form-btn uncontrForm-btn"
             type="submit"
           >
             Submit
