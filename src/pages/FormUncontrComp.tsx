@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateAge, updateCountry, updateEmail, updateGender, updateName, updatePsw } from "../reducer";
 
+import './pages.css';
+
 const FormUncontrComp = () => {
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputAgeRef = useRef<HTMLInputElement>(null);
@@ -38,7 +40,7 @@ const FormUncontrComp = () => {
       <h1 className="form-title uncontrForm-title">Uncontrolled components Form</h1>
       <div className="form uncontrForm-form">
         <form onSubmit={handleSubmit}>
-          <div className="form-name uncontrForm-name">
+          <div className="form-field form-name uncontrForm-name">
             <label>Name:</label>
             <input 
               type="text"
@@ -46,7 +48,7 @@ const FormUncontrComp = () => {
               ref={inputNameRef}
             />
           </div>
-          <div className="form-age uncontrForm-age">
+          <div className="form-field form-age uncontrForm-age">
             <label>Age:</label>
             <input 
               type="number"
@@ -54,7 +56,7 @@ const FormUncontrComp = () => {
               ref={inputAgeRef}
             />
           </div>
-          <div className="form-email uncontrForm-email">
+          <div className="form-field form-email uncontrForm-email">
             <label>Email:</label>
             <input 
               type="email"
@@ -62,7 +64,7 @@ const FormUncontrComp = () => {
               ref={inputEmailRef}
             />
           </div>
-          <div className="form-psw uncontrForm-psw">
+          <div className="form-field form-psw uncontrForm-psw">
             <label>Password:</label>
             <input 
               type="password"
@@ -70,7 +72,7 @@ const FormUncontrComp = () => {
               ref={inputPswRef}
             />
           </div>
-          <div className="form-pswRep uncontrForm-pswRep">
+          <div className="form-field form-pswRep uncontrForm-pswRep">
             <label>Password repeat:</label>
             <input 
               type="password"
@@ -78,7 +80,7 @@ const FormUncontrComp = () => {
               ref={inputPswRepRef}
             />
           </div>
-          <div className="form-gender uncontrForm-gender">
+          <div className="form-field form-gender uncontrForm-gender">
             <span>Gender:</span>
             <input 
               type="radio" 
@@ -97,36 +99,36 @@ const FormUncontrComp = () => {
             />
             <label htmlFor="genderFemale">Female</label>
           </div>
-          <div className="form-terms uncontrForm-terms">
+          <div className="form-field form-terms uncontrForm-terms">
+            <label>Terms and Conditions</label>
             <input 
               type="checkbox"
               name="terms"
               ref={inputTerms}
               />
-            <label>Terms and Conditions</label>
           </div>
-          <div className="form-img uncontrForm-img">
-          <label>Picture:</label>
+          <div className="form-field form-img uncontrForm-img">
+            <label>Picture:</label>
             <input
               type="file"
               name="image"
               accept="image/png, image/jpeg"
             />
           </div>
-          <div className="form-country uncontrForm-country">
+          <div className="form-field form-country uncontrForm-country">
             <label htmlFor="country">Country:</label>
             <select
               id="country"
               name="country"
               ref={inputCountry}
             >
-              <option value="italy">Italy</option>
-              <option value="spain">Spain</option>
-              <option value="portugal">Portugal</option>
+              <option value="Italy">Italy</option>
+              <option value="Spain">Spain</option>
+              <option value="Portugal">Portugal</option>
             </select>
           </div>
           <button 
-            className="form-btn uncontrForm-btn"
+            className="form-field form-btn uncontrForm-btn"
             type="submit"
           >
             Submit

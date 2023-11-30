@@ -1,7 +1,7 @@
 const FormReactHook = () => {
   return (
     <>
-      <h1>React Hook Form</h1>
+      <h1 className="form-title rHookForm-title">React Hook Form</h1>
     </>
   )
 };
