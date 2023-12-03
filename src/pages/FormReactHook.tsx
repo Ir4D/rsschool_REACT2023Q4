@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   updateAgeR,
   updateCountryR,
@@ -12,8 +14,6 @@ import {
 } from '../reducer';
 
 import './pages.css';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 type FormTypes = {
   nameR: string;
@@ -28,12 +28,28 @@ type FormTypes = {
 };
 
 const FormReactHook = () => {
+  const [imageR, setImageR] = useState<string | null>(null);
+
   const form = useForm<FormTypes>();
-  const { register, control, handleSubmit, formState, getValues } = form;
+  const { register, handleSubmit, formState, getValues } = form;
   const { errors } = formState;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageR(reader.result?.toString() || null);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error('No file selected');
+    }
+  };
 
   const onSubmit = (data: FormTypes) => {
     console.log(data);
@@ -45,7 +61,7 @@ const FormReactHook = () => {
     dispatch(updateGenderR(getValues('genderR')));
     dispatch(updateTermsR(getValues('termsR')));
     dispatch(updateCountryR(getValues('countryR')));
-    dispatch(updateImageR(getValues('imageR')));
+    dispatch(updateImageR(imageR));
 
     navigate('/');
 
@@ -148,6 +164,9 @@ const FormReactHook = () => {
               id="imageR"
               accept="image/png, image/jpeg"
               {...register('imageR')}
+              onChange={(e) => {
+                handleImage(e);
+              }}
             />
           </div>
           <div className="form-field form-country rHookForm-country">
@@ -163,7 +182,6 @@ const FormReactHook = () => {
             Submit
           </button>
         </form>
-        <DevTool control={control} />
       </div>
     </>
   );
