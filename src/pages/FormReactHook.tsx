@@ -1,7 +1,9 @@
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   updateAgeR,
   updateCountryR,
@@ -15,6 +17,38 @@ import {
 
 import './pages.css';
 
+const schema = yup.object({
+  nameR: yup
+    .string()
+    .required('Name is required')
+    .test('is-uppercase', 'First letter must be uppercased', function (value) {
+      return /^[A-Z]/.test(value || '');
+    }),
+  ageR: yup
+    .number()
+    .required('Age is required')
+    .positive('Age should be a positive number'),
+  emailR: yup
+    .string()
+    .email('Email format is not valid')
+    .required('Email is required'),
+  pswR: yup
+    .string()
+    .required('Password is required')
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/,
+      'Password must contain at least 8 characters, 1 number, 1 uppercase letter, and 1 special character'
+    ),
+  pswRepR: yup
+    .string()
+    .required('Password repeat is required')
+    .oneOf([yup.ref('pswR')], 'Passwords must match'),
+  genderR: yup.string().required('Gender is required'),
+  termsR: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
+  countryR: yup.string().required('Country is required'),
+  imageR: yup.string().required('Image is required'),
+});
+
 type FormTypes = {
   nameR: string;
   ageR: number;
@@ -22,15 +56,17 @@ type FormTypes = {
   pswR: string;
   pswRepR: string;
   genderR: string;
-  termsR: string;
+  termsR: boolean;
   countryR: string;
-  imageR: string;
+  imageR: string | undefined;
 };
 
 const FormReactHook = () => {
   const [imageR, setImageR] = useState<string | null>(null);
 
-  const form = useForm<FormTypes>();
+  const form = useForm<FormTypes>({
+    resolver: yupResolver(schema) as Resolver<FormTypes>,
+  });
   const { register, handleSubmit, formState, getValues } = form;
   const { errors } = formState;
 
@@ -59,7 +95,7 @@ const FormReactHook = () => {
     dispatch(updateEmailR(getValues('emailR')));
     dispatch(updatePswR(getValues('pswR')));
     dispatch(updateGenderR(getValues('genderR')));
-    dispatch(updateTermsR(getValues('termsR')));
+    dispatch(updateTermsR('Accepted'));
     dispatch(updateCountryR(getValues('countryR')));
     dispatch(updateImageR(imageR));
 
@@ -75,66 +111,28 @@ const FormReactHook = () => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="form-field form-name rHookForm-name">
             <label htmlFor="nameR">Name:</label>
-            <input
-              type="text"
-              id="nameR"
-              {...register('nameR', {
-                required: {
-                  value: true,
-                  message: 'Name is required',
-                },
-                pattern: {
-                  value: /^[A-Z]/,
-                  message: 'First letter must be uppercased',
-                },
-              })}
-            />
+            <input type="text" id="nameR" {...register('nameR')} />
             <p>{errors.nameR?.message}</p>
           </div>
           <div className="form-field form-age rHookForm-age">
             <label>Age:</label>
-            <input
-              type="number"
-              id="ageR"
-              {...register('ageR', {
-                required: {
-                  value: true,
-                  message: 'Age is required',
-                },
-                pattern: {
-                  value: /^[0-9]/,
-                  message: 'Age should be a non-negative number',
-                },
-              })}
-            />
+            <input type="number" id="ageR" {...register('ageR')} />
             <p>{errors.ageR?.message}</p>
           </div>
           <div className="form-field form-email rHookForm-email">
             <label>Email:</label>
-            <input
-              type="email"
-              id="emailR"
-              {...register('emailR', {
-                pattern: {
-                  value:
-                    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                  message: 'Invalid email format',
-                },
-                required: {
-                  value: true,
-                  message: 'Email is required',
-                },
-              })}
-            />
+            <input type="email" id="emailR" {...register('emailR')} />
             <p>{errors.emailR?.message}</p>
           </div>
           <div className="form-field form-psw rHookForm-psw">
             <label>Password:</label>
             <input type="password" id="pswR" {...register('pswR')} />
+            <p>{errors.pswR?.message}</p>
           </div>
           <div className="form-field form-pswRep rHookForm-pswRep">
             <label>Password repeat:</label>
             <input type="password" id="pswRepR" {...register('pswRepR')} />
+            <p>{errors.pswRepR?.message}</p>
           </div>
           <div className="form-field form-gender rHookForm-gender">
             <span>Gender:</span>
@@ -152,10 +150,12 @@ const FormReactHook = () => {
               {...register('genderR')}
             />
             <label htmlFor="genderFemale">Female</label>
+            <p>{errors.genderR?.message}</p>
           </div>
           <div className="form-field form-terms rHookForm-terms">
             <label>Terms and Conditions</label>
             <input type="checkbox" id="termsR" {...register('termsR')} />
+            <p>{errors.termsR?.message}</p>
           </div>
           <div className="form-field form-img rHookForm-img">
             <label>Picture:</label>
@@ -168,6 +168,7 @@ const FormReactHook = () => {
                 handleImage(e);
               }}
             />
+            <p>{errors.imageR?.message}</p>
           </div>
           <div className="form-field form-country rHookForm-country">
             <label htmlFor="country">Country:</label>
@@ -177,6 +178,7 @@ const FormReactHook = () => {
               id="countryR"
               {...register('countryR')}
             />
+            <p>{errors.countryR?.message}</p>
           </div>
           <button className="form-field form-btn rHookForm-btn" type="submit">
             Submit
