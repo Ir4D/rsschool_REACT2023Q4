@@ -115,22 +115,22 @@ const FormReactHook = () => {
             <p>{errors.nameR?.message}</p>
           </div>
           <div className="form-field form-age rHookForm-age">
-            <label>Age:</label>
+            <label htmlFor="ageR">Age:</label>
             <input type="number" id="ageR" {...register('ageR')} />
             <p>{errors.ageR?.message}</p>
           </div>
           <div className="form-field form-email rHookForm-email">
-            <label>Email:</label>
+            <label htmlFor="emailR">Email:</label>
             <input type="email" id="emailR" {...register('emailR')} />
             <p>{errors.emailR?.message}</p>
           </div>
           <div className="form-field form-psw rHookForm-psw">
-            <label>Password:</label>
+            <label htmlFor="pswR">Password:</label>
             <input type="password" id="pswR" {...register('pswR')} />
             <p>{errors.pswR?.message}</p>
           </div>
           <div className="form-field form-pswRep rHookForm-pswRep">
-            <label>Password repeat:</label>
+            <label htmlFor="pswRepR">Password repeat:</label>
             <input type="password" id="pswRepR" {...register('pswRepR')} />
             <p>{errors.pswRepR?.message}</p>
           </div>
@@ -153,12 +153,12 @@ const FormReactHook = () => {
             <p>{errors.genderR?.message}</p>
           </div>
           <div className="form-field form-terms rHookForm-terms">
-            <label>Terms and Conditions</label>
+            <label htmlFor="termsR">Terms and Conditions</label>
             <input type="checkbox" id="termsR" {...register('termsR')} />
             <p>{errors.termsR?.message}</p>
           </div>
           <div className="form-field form-img rHookForm-img">
-            <label>Picture:</label>
+            <label htmlFor="imageR">Picture:</label>
             <input
               type="file"
               id="imageR"

@@ -138,36 +138,41 @@ const FormUncontrComp: React.FC = () => {
       <div className="form uncontrForm-form">
         <form onSubmit={handleSubmit}>
           <div className="form-field form-name uncontrForm-name">
-            <label>Name:</label>
-            <input type="text" name="name" ref={inputNameRef} />
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" name="name" ref={inputNameRef} />
             {validationErrors.name && (
               <p className="error-message">{validationErrors.name}</p>
             )}
           </div>
           <div className="form-field form-age uncontrForm-age">
-            <label>Age:</label>
-            <input type="number" name="age" ref={inputAgeRef} />
+            <label htmlFor="age">Age:</label>
+            <input type="number" id="age" name="age" ref={inputAgeRef} />
             {validationErrors.age && (
               <p className="error-message">{validationErrors.age}</p>
             )}
           </div>
           <div className="form-field form-email uncontrForm-email">
-            <label>Email:</label>
-            <input type="email" name="email" ref={inputEmailRef} />
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" ref={inputEmailRef} />
             {validationErrors.email && (
               <p className="error-message">{validationErrors.email}</p>
             )}
           </div>
           <div className="form-field form-psw uncontrForm-psw">
-            <label>Password:</label>
-            <input type="password" name="psw" ref={inputPswRef} />
+            <label htmlFor="psw">Password:</label>
+            <input type="password" id="pswRep" name="psw" ref={inputPswRef} />
             {validationErrors.psw && (
               <p className="error-message">{validationErrors.psw}</p>
             )}
           </div>
           <div className="form-field form-pswRep uncontrForm-pswRep">
-            <label>Password repeat:</label>
-            <input type="password" name="pswRep" ref={inputPswRepRef} />
+            <label htmlFor="pswRep">Password repeat:</label>
+            <input
+              type="password"
+              id="pswRep"
+              name="pswRep"
+              ref={inputPswRepRef}
+            />
             {validationErrors.pswRep && (
               <p className="error-message">{validationErrors.pswRep}</p>
             )}
@@ -195,16 +200,17 @@ const FormUncontrComp: React.FC = () => {
             )}
           </div>
           <div className="form-field form-terms uncontrForm-terms">
-            <label>Terms and Conditions</label>
-            <input type="checkbox" name="terms" ref={inputTerms} />
+            <label htmlFor="terms">Terms and Conditions</label>
+            <input type="checkbox" id="terms" name="terms" ref={inputTerms} />
             {validationErrors.terms && (
               <p className="error-message">{validationErrors.terms}</p>
             )}
           </div>
           <div className="form-field form-img uncontrForm-img">
-            <label>Picture:</label>
+            <label htmlFor="image">Picture:</label>
             <input
               type="file"
+              id="image"
               name="image"
               ref={inputImage}
               accept="image/png, image/jpeg"
