@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const toolkitSlice = createSlice({
   name: 'toolkit',
@@ -11,6 +11,7 @@ const toolkitSlice = createSlice({
     gender: '',
     terms: '',
     country: '',
+    countries: [],
   },
   reducers: {
     updateName(state, action) {
@@ -37,6 +38,9 @@ const toolkitSlice = createSlice({
     updateCountry(state, action) {
       state.country = action.payload;
     },
+    updateCountries(state, action) {
+      state.countries = action.payload;
+    },
   },
 });
 
@@ -50,5 +54,6 @@ export const {
   updatePswRep,
   updateGender,
   updateTerms,
-  updateCountry
+  updateCountry,
+  updateCountries,
 } = toolkitSlice.actions;

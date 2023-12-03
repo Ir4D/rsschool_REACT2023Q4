@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import './header.css';
+import './Header.css';
 
 const Header = () => {
   return (
@@ -11,7 +11,7 @@ const Header = () => {
         <Link to="react-hook">React Hook Form</Link>
       </nav>
     </>
-  )
-}
+  );
+};
 
 export default Header;
