@@ -1,5 +1,5 @@
 import { Resolver, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,6 +16,7 @@ import {
 } from '../reducer';
 
 import './pages.css';
+import Autocomplete from '../components/Autocomplete';
 
 const schema = yup.object({
   nameR: yup
@@ -45,7 +46,6 @@ const schema = yup.object({
     .oneOf([yup.ref('pswR')], 'Passwords must match'),
   genderR: yup.string().required('Gender is required'),
   termsR: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
-  countryR: yup.string().required('Country is required'),
   imageR: yup.string().required('Image is required'),
 });
 
@@ -57,12 +57,12 @@ type FormTypes = {
   pswRepR: string;
   genderR: string;
   termsR: boolean;
-  countryR: string;
   imageR: string | undefined;
 };
 
 const FormReactHook = () => {
   const [imageR, setImageR] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
 
   const form = useForm<FormTypes>({
     resolver: yupResolver(schema) as Resolver<FormTypes>,
@@ -87,6 +87,11 @@ const FormReactHook = () => {
     }
   };
 
+  const inputCountryRef = useRef<HTMLInputElement>(null);
+  const handleSelectCountry = (country: string) => {
+    setSelectedCountry(country);
+  };
+
   const onSubmit = (data: FormTypes) => {
     console.log(data);
 
@@ -96,7 +101,7 @@ const FormReactHook = () => {
     dispatch(updatePswR(getValues('pswR')));
     dispatch(updateGenderR(getValues('genderR')));
     dispatch(updateTermsR('Accepted'));
-    dispatch(updateCountryR(getValues('countryR')));
+    dispatch(updateCountryR(selectedCountry));
     dispatch(updateImageR(imageR));
 
     navigate('/');
@@ -172,13 +177,10 @@ const FormReactHook = () => {
           </div>
           <div className="form-field form-country rHookForm-country">
             <label htmlFor="country">Country:</label>
-            <input
-              type="text"
-              placeholder="Enter your country"
-              id="countryR"
-              {...register('countryR')}
+            <Autocomplete
+              ref={inputCountryRef}
+              onSelectCountry={handleSelectCountry}
             />
-            <p>{errors.countryR?.message}</p>
           </div>
           <button className="form-field form-btn rHookForm-btn" type="submit">
             Submit
