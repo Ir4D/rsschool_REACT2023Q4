@@ -5,7 +5,7 @@ import './pages.css';
 const MainPage = () => {
   const mainPageHeading = 'The Main Page';
 
-  const { name, age, email, psw, gender, country, image } = useSelector(
+  const { name, age, email, psw, gender, terms, country, image } = useSelector(
     (state: {
       toolkit: {
         name: string;
@@ -13,6 +13,7 @@ const MainPage = () => {
         email: string;
         psw: string;
         gender: string;
+        terms: string;
         country: string;
         image: string;
       };
@@ -30,6 +31,7 @@ const MainPage = () => {
           <p>Email: {email}</p>
           <p>Password: {psw}</p>
           <p>Gender: {gender}</p>
+          <p>T&C: {terms}</p>
           <p>Country: {country}</p>
           {image && (
             <img

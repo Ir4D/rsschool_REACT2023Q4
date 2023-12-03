@@ -8,6 +8,7 @@ import {
   updateGender,
   updateName,
   updatePsw,
+  updateTerms,
   updateImage,
 } from '../reducer';
 import Autocomplete from '../components/Autocomplete';
@@ -53,6 +54,7 @@ const FormUncontrComp: React.FC = () => {
     dispatch(updateEmail(inputEmailRef.current?.value));
     dispatch(updatePsw(inputPswRef.current?.value));
     dispatch(updateGender(inputGender.current?.value));
+    dispatch(updateTerms(inputTerms.current?.value));
     dispatch(updateCountry(selectedCountry || ''));
     dispatch(updateImage(image));
 
