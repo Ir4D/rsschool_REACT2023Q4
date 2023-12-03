@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   updateAge,
   updateCountry,
@@ -12,7 +13,6 @@ import {
   updateImage,
 } from '../reducer';
 import Autocomplete from '../components/Autocomplete';
-import { useNavigate } from 'react-router-dom';
 
 import './pages.css';
 
