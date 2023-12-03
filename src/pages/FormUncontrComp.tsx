@@ -8,6 +8,7 @@ import {
   updateGender,
   updateName,
   updatePsw,
+  updateImage,
 } from '../reducer';
 import Autocomplete from '../components/Autocomplete';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,9 @@ import { useNavigate } from 'react-router-dom';
 import './pages.css';
 
 const FormUncontrComp: React.FC = () => {
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [image, setImage] = useState<string | null>(null);
+
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputAgeRef = useRef<HTMLInputElement>(null);
   const inputEmailRef = useRef<HTMLInputElement>(null);
@@ -23,11 +27,24 @@ const FormUncontrComp: React.FC = () => {
   const inputGender = useRef<HTMLInputElement>(null);
   const inputTerms = useRef<HTMLInputElement>(null);
   const inputCountryRef = useRef<HTMLInputElement>(null);
-
-  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const inputImage = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result?.toString() || null);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error('No file selected');
+    }
+  };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -37,6 +54,7 @@ const FormUncontrComp: React.FC = () => {
     dispatch(updatePsw(inputPswRef.current?.value));
     dispatch(updateGender(inputGender.current?.value));
     dispatch(updateCountry(selectedCountry || ''));
+    dispatch(updateImage(image));
 
     navigate('/');
   };
@@ -97,7 +115,15 @@ const FormUncontrComp: React.FC = () => {
           </div>
           <div className="form-field form-img uncontrForm-img">
             <label>Picture:</label>
-            <input type="file" name="image" accept="image/png, image/jpeg" />
+            <input
+              type="file"
+              name="image"
+              ref={inputImage}
+              accept="image/png, image/jpeg"
+              onChange={(e) => {
+                handleImage(e);
+              }}
+            />
           </div>
           <div className="form-field form-country uncontrForm-country">
             <label htmlFor="country">Country:</label>

@@ -12,6 +12,7 @@ const toolkitSlice = createSlice({
     terms: '',
     country: '',
     countries: [],
+    image: '',
   },
   reducers: {
     updateName(state, action) {
@@ -41,6 +42,9 @@ const toolkitSlice = createSlice({
     updateCountries(state, action) {
       state.countries = action.payload;
     },
+    updateImage(state, action) {
+      state.image = action.payload;
+    },
   },
 });
 
@@ -56,4 +60,5 @@ export const {
   updateTerms,
   updateCountry,
   updateCountries,
+  updateImage,
 } = toolkitSlice.actions;
