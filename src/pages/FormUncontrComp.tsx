@@ -10,6 +10,7 @@ import {
   updatePsw,
 } from '../reducer';
 import Autocomplete from '../components/Autocomplete';
+import { useNavigate } from 'react-router-dom';
 
 import './pages.css';
 
@@ -26,6 +27,7 @@ const FormUncontrComp: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -35,6 +37,8 @@ const FormUncontrComp: React.FC = () => {
     dispatch(updatePsw(inputPswRef.current?.value));
     dispatch(updateGender(inputGender.current?.value));
     dispatch(updateCountry(selectedCountry || ''));
+
+    navigate('/');
   };
 
   const handleSelectCountry = (country: string) => {
