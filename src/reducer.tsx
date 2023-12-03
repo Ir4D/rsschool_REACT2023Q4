@@ -13,6 +13,16 @@ const toolkitSlice = createSlice({
     country: '',
     countries: [],
     image: '',
+    nameR: '',
+    ageR: '',
+    emailR: '',
+    pswR: '',
+    pswRepR: '',
+    genderR: '',
+    termsR: '',
+    countryR: '',
+    countriesR: [],
+    imageR: '',
   },
   reducers: {
     updateName(state, action) {
@@ -45,6 +55,36 @@ const toolkitSlice = createSlice({
     updateImage(state, action) {
       state.image = action.payload;
     },
+    updateNameR(state, action) {
+      state.nameR = action.payload;
+    },
+    updateAgeR(state, action) {
+      state.ageR = action.payload;
+    },
+    updateEmailR(state, action) {
+      state.emailR = action.payload;
+    },
+    updatePswR(state, action) {
+      state.pswR = action.payload;
+    },
+    updatePswRepR(state, action) {
+      state.pswRepR = action.payload;
+    },
+    updateGenderR(state, action) {
+      state.genderR = action.payload;
+    },
+    updateTermsR(state, action) {
+      state.termsR = action.payload;
+    },
+    updateCountryR(state, action) {
+      state.countryR = action.payload;
+    },
+    updateCountriesR(state, action) {
+      state.countriesR = action.payload;
+    },
+    updateImageR(state, action) {
+      state.imageR = action.payload;
+    },
   },
 });
 
@@ -61,4 +101,14 @@ export const {
   updateCountry,
   updateCountries,
   updateImage,
+  updateNameR,
+  updateAgeR,
+  updateEmailR,
+  updatePswR,
+  updatePswRepR,
+  updateGenderR,
+  updateTermsR,
+  updateCountryR,
+  updateCountriesR,
+  updateImageR,
 } = toolkitSlice.actions;

@@ -1,7 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
+import {
+  updateAgeR,
+  updateCountryR,
+  updateEmailR,
+  updateGenderR,
+  updateNameR,
+  updatePswR,
+  updateTermsR,
+  updateImageR,
+} from '../reducer';
 
 import './pages.css';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 type FormTypes = {
   nameR: string;
@@ -17,11 +29,26 @@ type FormTypes = {
 
 const FormReactHook = () => {
   const form = useForm<FormTypes>();
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, getValues } = form;
   const { errors } = formState;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (data: FormTypes) => {
     console.log(data);
+
+    dispatch(updateNameR(getValues('nameR')));
+    dispatch(updateAgeR(getValues('ageR')));
+    dispatch(updateEmailR(getValues('emailR')));
+    dispatch(updatePswR(getValues('pswR')));
+    dispatch(updateGenderR(getValues('genderR')));
+    dispatch(updateTermsR(getValues('termsR')));
+    dispatch(updateCountryR(getValues('countryR')));
+    dispatch(updateImageR(getValues('imageR')));
+
+    navigate('/');
+
     errors;
   };
 
