@@ -141,28 +141,28 @@ const FormUncontrComp: React.FC = () => {
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" ref={inputNameRef} />
             {validationErrors.name && (
-              <p className="error-message">{validationErrors.name}</p>
+              <p className="error">{validationErrors.name}</p>
             )}
           </div>
           <div className="form-field form-age uncontrForm-age">
             <label htmlFor="age">Age:</label>
             <input type="number" id="age" name="age" ref={inputAgeRef} />
             {validationErrors.age && (
-              <p className="error-message">{validationErrors.age}</p>
+              <p className="error">{validationErrors.age}</p>
             )}
           </div>
           <div className="form-field form-email uncontrForm-email">
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" name="email" ref={inputEmailRef} />
             {validationErrors.email && (
-              <p className="error-message">{validationErrors.email}</p>
+              <p className="error">{validationErrors.email}</p>
             )}
           </div>
           <div className="form-field form-psw uncontrForm-psw">
             <label htmlFor="psw">Password:</label>
             <input type="password" id="pswRep" name="psw" ref={inputPswRef} />
             {validationErrors.psw && (
-              <p className="error-message">{validationErrors.psw}</p>
+              <p className="error">{validationErrors.psw}</p>
             )}
           </div>
           <div className="form-field form-pswRep uncontrForm-pswRep">
@@ -174,7 +174,7 @@ const FormUncontrComp: React.FC = () => {
               ref={inputPswRepRef}
             />
             {validationErrors.pswRep && (
-              <p className="error-message">{validationErrors.pswRep}</p>
+              <p className="error">{validationErrors.pswRep}</p>
             )}
           </div>
           <div className="form-field form-gender uncontrForm-gender">
@@ -196,14 +196,14 @@ const FormUncontrComp: React.FC = () => {
             />
             <label htmlFor="genderFemale">Female</label>
             {validationErrors.gender && (
-              <p className="error-message">{validationErrors.gender}</p>
+              <p className="error">{validationErrors.gender}</p>
             )}
           </div>
           <div className="form-field form-terms uncontrForm-terms">
             <label htmlFor="terms">Terms and Conditions</label>
             <input type="checkbox" id="terms" name="terms" ref={inputTerms} />
             {validationErrors.terms && (
-              <p className="error-message">{validationErrors.terms}</p>
+              <p className="error">{validationErrors.terms}</p>
             )}
           </div>
           <div className="form-field form-img uncontrForm-img">
@@ -219,7 +219,7 @@ const FormUncontrComp: React.FC = () => {
               }}
             />
             {validationErrors.image && (
-              <p className="error-message">{validationErrors.image}</p>
+              <p className="error">{validationErrors.image}</p>
             )}
           </div>
           <div className="form-field form-country uncontrForm-country">

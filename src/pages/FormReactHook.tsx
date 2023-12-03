@@ -117,27 +117,27 @@ const FormReactHook = () => {
           <div className="form-field form-name rHookForm-name">
             <label htmlFor="nameR">Name:</label>
             <input type="text" id="nameR" {...register('nameR')} />
-            <p>{errors.nameR?.message}</p>
+            <p className="error">{errors.nameR?.message}</p>
           </div>
           <div className="form-field form-age rHookForm-age">
             <label htmlFor="ageR">Age:</label>
             <input type="number" id="ageR" {...register('ageR')} />
-            <p>{errors.ageR?.message}</p>
+            <p className="error">{errors.ageR?.message}</p>
           </div>
           <div className="form-field form-email rHookForm-email">
             <label htmlFor="emailR">Email:</label>
             <input type="email" id="emailR" {...register('emailR')} />
-            <p>{errors.emailR?.message}</p>
+            <p className="error">{errors.emailR?.message}</p>
           </div>
           <div className="form-field form-psw rHookForm-psw">
             <label htmlFor="pswR">Password:</label>
             <input type="password" id="pswR" {...register('pswR')} />
-            <p>{errors.pswR?.message}</p>
+            <p className="error">{errors.pswR?.message}</p>
           </div>
           <div className="form-field form-pswRep rHookForm-pswRep">
             <label htmlFor="pswRepR">Password repeat:</label>
             <input type="password" id="pswRepR" {...register('pswRepR')} />
-            <p>{errors.pswRepR?.message}</p>
+            <p className="error">{errors.pswRepR?.message}</p>
           </div>
           <div className="form-field form-gender rHookForm-gender">
             <span>Gender:</span>
@@ -155,12 +155,12 @@ const FormReactHook = () => {
               {...register('genderR')}
             />
             <label htmlFor="genderFemale">Female</label>
-            <p>{errors.genderR?.message}</p>
+            <p className="error">{errors.genderR?.message}</p>
           </div>
           <div className="form-field form-terms rHookForm-terms">
             <label htmlFor="termsR">Terms and Conditions</label>
             <input type="checkbox" id="termsR" {...register('termsR')} />
-            <p>{errors.termsR?.message}</p>
+            <p className="error">{errors.termsR?.message}</p>
           </div>
           <div className="form-field form-img rHookForm-img">
             <label htmlFor="imageR">Picture:</label>
@@ -173,7 +173,7 @@ const FormReactHook = () => {
                 handleImage(e);
               }}
             />
-            <p>{errors.imageR?.message}</p>
+            <p className="error">{errors.imageR?.message}</p>
           </div>
           <div className="form-field form-country rHookForm-country">
             <label htmlFor="country">Country:</label>

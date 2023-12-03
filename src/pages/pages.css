@@ -73,3 +73,7 @@ select {
 .form-btn:hover {
   background-color: #419f99;
 }
+
+.error {
+  color: red;
+}
