@@ -26,7 +26,7 @@ const MainPage = () => {
     (state: {
       toolkit: {
         name: string;
-        age: string;
+        age: number;
         email: string;
         psw: string;
         gender: string;
@@ -34,7 +34,7 @@ const MainPage = () => {
         country: string;
         image: string;
         nameR: string;
-        ageR: string;
+        ageR: number;
         emailR: string;
         pswR: string;
         genderR: string;

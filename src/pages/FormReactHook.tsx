@@ -25,10 +25,20 @@ const schema = yup.object({
     .test('is-uppercase', 'First letter must be uppercased', function (value) {
       return /^[A-Z]/.test(value || '');
     }),
+  // ageR: yup
+  //   .number()
+  //   .required('Age is required')
+  //   .positive('Age should be a positive number'),
   ageR: yup
     .number()
+    .typeError('Age must be a number')
+    .transform((originalValue) => {
+      const trimmedValue = String(originalValue).trim();
+      return trimmedValue === '' ? undefined : parseInt(trimmedValue, 10);
+    })
     .required('Age is required')
-    .positive('Age should be a positive number'),
+    .positive('Age should be a positive number')
+    .integer('Age should be an integer'),
   emailR: yup
     .string()
     .email('Email format is not valid')
@@ -67,7 +77,7 @@ const FormReactHook = () => {
   const form = useForm<FormTypes>({
     resolver: yupResolver(schema) as Resolver<FormTypes>,
   });
-  const { register, handleSubmit, formState, getValues } = form;
+  const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
   const dispatch = useDispatch();
@@ -92,21 +102,32 @@ const FormReactHook = () => {
     setSelectedCountry(country);
   };
 
-  const onSubmit = (data: FormTypes) => {
-    console.log(data);
+  const onSubmit = async (data: FormTypes) => {
+    try {
+      await schema.validate(data, { abortEarly: false });
 
-    dispatch(updateNameR(getValues('nameR')));
-    dispatch(updateAgeR(getValues('ageR')));
-    dispatch(updateEmailR(getValues('emailR')));
-    dispatch(updatePswR(getValues('pswR')));
-    dispatch(updateGenderR(getValues('genderR')));
-    dispatch(updateTermsR('Accepted'));
-    dispatch(updateCountryR(selectedCountry));
-    dispatch(updateImageR(imageR));
+      dispatch(updateNameR(data.nameR));
+      dispatch(updateAgeR(data.ageR));
+      dispatch(updateEmailR(data.emailR));
+      dispatch(updatePswR(data.pswR));
+      dispatch(updateGenderR(data.genderR));
+      dispatch(updateTermsR('Accepted'));
+      dispatch(updateCountryR(selectedCountry));
+      dispatch(updateImageR(imageR));
 
-    navigate('/');
-
-    errors;
+      navigate('/');
+    } catch (error) {
+      if (yup.ValidationError.isError(error)) {
+        const errors: Record<string, string> = {};
+        error.inner.forEach((validationError: yup.ValidationError) => {
+          if (validationError.path) {
+            errors[validationError.path] = validationError.message;
+          }
+        });
+      } else {
+        console.error(error);
+      }
+    }
   };
 
   return (

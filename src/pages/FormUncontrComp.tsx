@@ -89,7 +89,10 @@ const FormUncontrComp: React.FC = () => {
       await schema.validate(
         {
           name: inputNameRef.current?.value,
-          age: inputAgeRef.current?.value,
+          age:
+            inputAgeRef.current?.value !== ''
+              ? parseInt(inputAgeRef.current?.value || '0')
+              : undefined,
           email: inputEmailRef.current?.value,
           psw: inputPswRef.current?.value,
           pswRep: inputPswRepRef.current?.value,
@@ -101,7 +104,13 @@ const FormUncontrComp: React.FC = () => {
       );
 
       dispatch(updateName(inputNameRef.current?.value));
-      dispatch(updateAge(inputAgeRef.current?.value));
+      dispatch(
+        updateAge(
+          inputAgeRef.current?.value !== ''
+            ? parseInt(inputAgeRef.current?.value || '0')
+            : undefined
+        )
+      );
       dispatch(updateEmail(inputEmailRef.current?.value));
       dispatch(updatePsw(inputPswRef.current?.value));
       dispatch(updatePswRep(inputPswRepRef.current?.value));

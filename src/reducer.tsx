@@ -4,7 +4,7 @@ const toolkitSlice = createSlice({
   name: 'toolkit',
   initialState: {
     name: '',
-    age: '',
+    age: 0,
     email: '',
     psw: '',
     pswRep: '',
@@ -14,7 +14,7 @@ const toolkitSlice = createSlice({
     countries: [],
     image: '',
     nameR: '',
-    ageR: '',
+    ageR: 0,
     emailR: '',
     pswR: '',
     pswRepR: '',
