@@ -1,5 +1,5 @@
 import { Resolver, useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +16,7 @@ import {
 } from '../reducer';
 
 import './pages.css';
-import Autocomplete from '../components/Autocomplete';
+import AutocompleteR from '../components/AutocompleteHook';
 
 const schema = yup.object({
   nameR: yup
@@ -25,10 +25,6 @@ const schema = yup.object({
     .test('is-uppercase', 'First letter must be uppercased', function (value) {
       return /^[A-Z]/.test(value || '');
     }),
-  // ageR: yup
-  //   .number()
-  //   .required('Age is required')
-  //   .positive('Age should be a positive number'),
   ageR: yup
     .number()
     .typeError('Age must be a number')
@@ -57,6 +53,7 @@ const schema = yup.object({
   genderR: yup.string().required('Gender is required'),
   termsR: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
   imageR: yup.string().required('Image is required'),
+  countryR: yup.string().required('Country is required'),
 });
 
 type FormTypes = {
@@ -68,6 +65,7 @@ type FormTypes = {
   genderR: string;
   termsR: boolean;
   imageR: string | undefined;
+  countryR: string;
 };
 
 const FormReactHook = () => {
@@ -97,9 +95,9 @@ const FormReactHook = () => {
     }
   };
 
-  const inputCountryRef = useRef<HTMLInputElement>(null);
   const handleSelectCountry = (country: string) => {
     setSelectedCountry(country);
+    form.setValue('countryR', country);
   };
 
   const onSubmit = async (data: FormTypes) => {
@@ -197,11 +195,9 @@ const FormReactHook = () => {
             <p className="error">{errors.imageR?.message}</p>
           </div>
           <div className="form-field form-country rHookForm-country">
-            <label htmlFor="country">Country:</label>
-            <Autocomplete
-              ref={inputCountryRef}
-              onSelectCountry={handleSelectCountry}
-            />
+            <label htmlFor="countryR">Country:</label>
+            <AutocompleteR onSelectCountry={handleSelectCountry} />
+            <p className="error">{errors.countryR?.message}</p>
           </div>
           <button className="form-field form-btn rHookForm-btn" type="submit">
             Submit

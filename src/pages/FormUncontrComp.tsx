@@ -47,6 +47,7 @@ const schema = yup.object({
   gender: yup.string().required('Gender is required'),
   terms: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
   image: yup.string().required('Image is required'),
+  country: yup.string().required('Country is required'),
 });
 
 const FormUncontrComp: React.FC = () => {
@@ -99,6 +100,7 @@ const FormUncontrComp: React.FC = () => {
           gender: inputGender.current?.value,
           terms: inputTerms.current?.checked,
           image: inputImage.current?.files?.[0],
+          country: selectedCountry,
         },
         { abortEarly: false }
       );
@@ -237,6 +239,7 @@ const FormUncontrComp: React.FC = () => {
               ref={inputCountryRef}
               onSelectCountry={handleSelectCountry}
             />
+            <p className="error">{validationErrors.country}</p>
           </div>
           <button className="form-field form-btn uncontrForm-btn" type="submit">
             Submit
