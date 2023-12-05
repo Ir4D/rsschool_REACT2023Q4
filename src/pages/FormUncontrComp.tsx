@@ -44,9 +44,18 @@ const schema = yup.object({
     .string()
     .required('Password repeat is required')
     .oneOf([yup.ref('psw')], 'Passwords must match'),
-  gender: yup.string().required('Gender is required'),
+  gender: yup
+    .string()
+    .required('Gender is required')
+    .oneOf(['Male', 'Female'], 'Please select a valid gender'),
   terms: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
-  image: yup.string().required('Image is required'),
+  image: yup
+    .mixed()
+    .nullable()
+    .required('Image is required')
+    .test('file_size', 'Image size is too big (> 1MB)', function (value) {
+      return !value || (value instanceof Blob && value.size <= 1024 * 1024);
+    }),
   country: yup.string().required('Country is required'),
 });
 
@@ -62,7 +71,8 @@ const FormUncontrComp: React.FC = () => {
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const inputPswRef = useRef<HTMLInputElement>(null);
   const inputPswRepRef = useRef<HTMLInputElement>(null);
-  const inputGender = useRef<HTMLInputElement>(null);
+  const inputGenderMale = useRef<HTMLInputElement>(null);
+  const inputGenderFemale = useRef<HTMLInputElement>(null);
   const inputTerms = useRef<HTMLInputElement>(null);
   const inputCountryRef = useRef<HTMLInputElement>(null);
   const inputImage = useRef<HTMLInputElement>(null);
@@ -97,7 +107,11 @@ const FormUncontrComp: React.FC = () => {
           email: inputEmailRef.current?.value,
           psw: inputPswRef.current?.value,
           pswRep: inputPswRepRef.current?.value,
-          gender: inputGender.current?.value,
+          gender: inputGenderMale.current?.checked
+            ? 'Male'
+            : inputGenderFemale.current?.checked
+              ? 'Female'
+              : undefined,
           terms: inputTerms.current?.checked,
           image: inputImage.current?.files?.[0],
           country: selectedCountry,
@@ -116,7 +130,15 @@ const FormUncontrComp: React.FC = () => {
       dispatch(updateEmail(inputEmailRef.current?.value));
       dispatch(updatePsw(inputPswRef.current?.value));
       dispatch(updatePswRep(inputPswRepRef.current?.value));
-      dispatch(updateGender(inputGender.current?.value));
+      dispatch(
+        updateGender(
+          inputGenderMale.current?.checked
+            ? 'Male'
+            : inputGenderFemale.current?.checked
+              ? 'Female'
+              : undefined
+        )
+      );
       dispatch(updateTerms('Accepted'));
       dispatch(updateCountry(selectedCountry || ''));
       dispatch(updateImage(image));
@@ -195,7 +217,7 @@ const FormUncontrComp: React.FC = () => {
               id="genderMale"
               name="gender"
               value="Male"
-              ref={inputGender}
+              ref={inputGenderMale}
             />
             <label htmlFor="genderMale">Male</label>
             <input
@@ -203,7 +225,7 @@ const FormUncontrComp: React.FC = () => {
               id="genderFemale"
               name="gender"
               value="Female"
-              ref={inputGender}
+              ref={inputGenderFemale}
             />
             <label htmlFor="genderFemale">Female</label>
             {validationErrors.gender && (

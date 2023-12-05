@@ -52,7 +52,21 @@ const schema = yup.object({
     .oneOf([yup.ref('pswR')], 'Passwords must match'),
   genderR: yup.string().required('Gender is required'),
   termsR: yup.boolean().oneOf([true], 'Acceptance of T&C is required'),
-  imageR: yup.string().required('Image is required'),
+  imageR: yup
+    .mixed()
+    .test('filePresence', 'Image is required', function (value) {
+      const files = value as FileList;
+      return files && files.length > 0;
+    })
+    .test('fileSize', 'The file is too large (>1MB)', function (value) {
+      if (!value) {
+        return true;
+      }
+      const files = value as FileList;
+      return (
+        files.length === 0 || (files.length > 0 && files[0].size <= 1024 * 1024)
+      );
+    }),
   countryR: yup.string().required('Country is required'),
 });
 
@@ -64,7 +78,7 @@ type FormTypes = {
   pswRepR: string;
   genderR: string;
   termsR: boolean;
-  imageR: string | undefined;
+  imageR: string | [] | object | undefined;
   countryR: string;
 };
 
@@ -73,7 +87,7 @@ const FormReactHook = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>('');
 
   const form = useForm<FormTypes>({
-    resolver: yupResolver(schema) as Resolver<FormTypes>,
+    resolver: yupResolver(schema) as unknown as Resolver<FormTypes>,
   });
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
